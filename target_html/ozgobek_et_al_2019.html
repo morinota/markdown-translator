@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.168">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ozgobek_et_al_2019</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="ozgobek_et_al_2019_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ozgobek_et_al_2019_files/libs/quarto-html/quarto.js"></script>
+<script src="ozgobek_et_al_2019_files/libs/quarto-html/popper.min.js"></script>
+<script src="ozgobek_et_al_2019_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ozgobek_et_al_2019_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ozgobek_et_al_2019_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ozgobek_et_al_2019_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ozgobek_et_al_2019_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ozgobek_et_al_2019_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ozgobek_et_al_2019_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="title" class="level3">
+<h3 class="anchored" data-anchor-id="title">0.1. title</h3>
+<p>A Survey on Challenges and Methods in News Recommendation</p>
+</section>
+<section id="abstruct" class="level3">
+<h3 class="anchored" data-anchor-id="abstruct">0.2. abstruct</h3>
+<p>Recommender systems are built to provide the most proper item or information within the huge amount of data on the internet without the manual effort of the users. As a specific application domain, news recommender systems aim to give the most relevant news article recommendations to users according to their personal interests and preferences. News recommendation have specific challenges when compared to the other domains. From the technical point of view there are many different methods to build a recommender system. Thus, while general methods are used in news recommendation, researchers also need some new methods to make proper news recommendations. In this paper we present the different approaches to news recommender systems and the challenges of news recommendation.</p>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
+<p>The increasing amount of data on the internet makes harder to find what we are really looking for. Even though the technologies like search engines and RSS readers help us, it is still hard to find the information we really want to get. On the other hand, we are not always sure about what we want to get. We can only search for what we know and we try to find some connections to the new information. But this approach of finding an item that the user will like mostly depends on the coincidences, the attention of the user to inspect the search results and it requires a lot of effort. Still there is a high possibility that the user could not finding the most suitable item for herself at the end.</p>
+<p>Recommender systems are built to help us to easily find the most proper information on the internet. Unlike the search engines recommender systems bring the information to the user without any manual search effort. This is achieved by using the similarities between users and/or items. There are many methods to build a recommender system and these methods can be applied to many specific domains like shopping (e.g.&nbsp;Amazon), movies (e.g.&nbsp;Netflix) and music (e.g.&nbsp;Pandora Radio). Since each application domain has its own specific needs, the method used for recommendations differs.</p>
+<p>As people are beginning to read news online more and more, it became a challenge to find the interesting news articles. Most of the users spend a lot of time to find an interesting article on a single website or they just read the front page news which is not adequate. When we consider the different news sources on the internet, one can spend plenty of time just reading the news. News recommender systems aim to give the most relevant article recommendations to users according to their personal interests and preferences.</p>
+<p>Recommending news articles is one of the most challenging recommendation tasks. The news domain differs from other domains in many ways. For example; the popularity and recency of news articles changes so fast over time. So focusing on the recency issue becomes more challenging than it is in other domains. Also some news articles may be connected with each other that the user may want to read the previous news items related to the one she already reads or she may want to keep informed about. Only learning user preferences can be an unsatisfactory solution to news recommendation. This is because the user may want to read a news article when she is not really interested in the subject but she thinks it is important. For example; wanting to read the news about elections even if she is not generally interested in politics. Also considering the high number of new articles published every hour increases the complexity of other challenges.</p>
+<p>In this paper, we summarize the advances in this very special application domain of recommender systems which is news recommender systems. The paper is structured as follows: Section 2 gives an overview of recommender systems. Section 3 summarizes all the challenges of recommender systems in news domain which includes some common challenges with general recommender systems. Section 4 discusses the different approaches of news recommender systems for particular challenges. Section 5, gives the discussions. And in section 6 the conclusions are provided.</p>
+</section>
+<section id="recommendation-techniques" class="level2">
+<h2 class="anchored" data-anchor-id="recommendation-techniques">2. Recommendation Techniques</h2>
+<p>There are different methods for recommending an item. Most commonly they are grouped into three categories: Content-based filtering, collaborative filtering and hybrid. It is possible to categorize the recommendation techniques differently. For example in (Burke, 2002) five categories are proposed for recommendation techniques. These are: Collaborative, content-based, demographic, utility-based and knowledge-based techniques. This categorization of recommendation methods is based on the background data included in the system, input data gathered from online user interaction and the algorithm used for the recommendation. Since the first categorization is more widely used we will discuss these three categories. There is also an alternative semantic approach (Cantador et al., 2008), in which semantic representations are added on top of other methods, we will not go into the details of this work in the rest of the paper.</p>
+<section id="content-based-filtering" class="level3">
+<h3 class="anchored" data-anchor-id="content-based-filtering">2.1. Content-based Filtering</h3>
+<p>In content-based recommendations, the properties of items are used to make recommendations. Items which have similar properties with the user’s previous preferences are recommended to the user. Thus, for this technique it is important to find the similarities between items. For example; to recommend a movie to the user, the content-based system should know about the user’s past movie preferences and the similarity between movies. As discussed in (Adomavicius and Tuzhilin, 2005) this approach has its roots in information filtering and information retrieval. Sometimes information filtering is used in the same meaning as content-based filtering (Lee and Park, 2007).</p>
+</section>
+<section id="collaborative-filtering" class="level3">
+<h3 class="anchored" data-anchor-id="collaborative-filtering">2.2. Collaborative Filtering</h3>
+<p>In collaborative filtering, recommendations are done by using the other people’s preferences which are similar to the user’s past preferences. Collaborative filtering method can be divided into three as memorybased, model-based and hybrid methods. In memorybased (also called the neighborhood-based, userbased, heuristic-based) collaborative filtering method, user ratings are used to compute similarities between users/items. By using the statistical techniques it is aimed to find a similar user to the targeted user. After the similarities found the recommendations can be done by using different algorithms. In the modelbased (also called item-based) method, a model is created for each user by using data mining and machine learning algorithms. Probabilistic methods can be used for recommendation predictions. Methods like Bayesian network and clustering are included in this method (Sarwar et al., 2001). The Hybrid collaborative filtering method uses both model-based and memory-based methods.</p>
+</section>
+<section id="hybrid-approach" class="level3">
+<h3 class="anchored" data-anchor-id="hybrid-approach">2.3. Hybrid Approach</h3>
+<p>These approaches use both content-based and collaborative filtering. Generally the aim of these kinds of approaches is to come up with solutions to the problems which occur with the use of a single approach. There may be different combinations of using the two methods together. (Burke, 2002) groups the hybridization methods into seven and defines how different methods can be joined.</p>
+</section>
+</section>
+<section id="particular-challenges-in-news-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="particular-challenges-in-news-recommendations">3. PARTICULAR CHALLENGES IN NEWS RECOMMENDATIONS</h2>
+<p>For many people building a recommender system can be perceived as an easy task at first sight. But finding the proper item to recommend can be a tedious task that requires access to information about the user, the items and the general context. Personal preferences and interests tend to vary on the basis of age, culture, gender and personality, and they also change over time. A successful recommender system needs to address a number of intrinsic challenges that each constitute a research field. In the news domain, because of the dynamic properties of news items some challenges have more importance than the others. The challenges we explain in this section are all related but not completely specific to news domain. Most of these challenges are the general challenges of recommender systems where some of the specific challenges (e.g.&nbsp;recency) may not be an issue in other domains.</p>
+<section id="cold-start-first-rater-ramp-up-early-rater-problem" class="level3">
+<h3 class="anchored" data-anchor-id="cold-start-first-rater-ramp-up-early-rater-problem">3.1. Cold-start (first rater, ramp up, early rater) problem:</h3>
+<p>The first-rater problem is one of the most common problems in recommender system collaborative filtering applications. Basically, it is the problem that the system cannot recommend new items if they do not have any clicks from other users. Or when there is no data about the completely new user then it is not possible to make recommendations for her.</p>
+</section>
+<section id="data-sparsity" class="level3">
+<h3 class="anchored" data-anchor-id="data-sparsity">3.2. Data sparsity</h3>
+<p>The matrices used for collaborative filtering can be very sparse when there are not enough ratings from users. The possibility of data sparsity increases if the number of columns or rows is much higher than the other. For example; if the number of items is much more than the number of users then it requires too many ratings to fill the item-user matrix. Data sparsity causes a decrease in the performance of the system.</p>
+</section>
+<section id="recency" class="level3">
+<h3 class="anchored" data-anchor-id="recency">3.3. Recency</h3>
+<p>Recency is one the most important challenges in news recommendation domain. Most of the users want to read fresh news instead of old dated articles. So the importance of news items decreases in time. On the other hand, some news articles may be connected with each other that the user may want to read the previous news items related to the one she already reads or he/she may want to keep informed about that subject (Li et al., 2011)</p>
+</section>
+<section id="implicit-user-feedback" class="level3">
+<h3 class="anchored" data-anchor-id="implicit-user-feedback">3.4. Implicit user feedback:</h3>
+<p>: User feedbacks are quite important to make more precise recommendations. Without explicit feedbacks it may not be possible to understand if the user liked the article she read or not (Fortuna et al., 2010). But it is not practical for the system to interact with the user continuously. So the system should be able to collect implicit feedbacks effectively while protecting the user privacy.</p>
+</section>
+<section id="changing-interests-of-users" class="level3">
+<h3 class="anchored" data-anchor-id="changing-interests-of-users">3.5. Changing interests of users:</h3>
+<p>Another key challenge is predicting the future interests of users for better recommendations because people may have changing interests (Liu et al., 2010). For some domains like movie or book recommendations, the change of user interest happens more slowly. But for the news domain it is really hard to predict the changes. Also some people may read the news not because he/she interested in the topic in general but because she found it important.</p>
+</section>
+<section id="scalability" class="level3">
+<h3 class="anchored" data-anchor-id="scalability">3.6. Scalability</h3>
+<p>Recommender systems are aimed to serve many users, sometimes millions of users (Das et al., 2007) at a time. Also the number of items to be recommended can be very high. To build a really useful recommender system it is needed the system to be fast. In different news sources on the internet it is possible to find tens of new headlines within an hour. So in this dynamic environment of news, the news recommender system should have a fast and real time processing capabilities (Li et al., 2011). Independent from which approach is used, scalability is one the most important problems of recommender systems.</p>
+</section>
+<section id="unstructured-content" class="level3">
+<h3 class="anchored" data-anchor-id="unstructured-content">3.7. Unstructured content</h3>
+<p>For the systems which require content information, it is hard to analyze the content, especially for the news domain. For better news recommendations, news items should be structured and machine readable (Saranya.K.G and Sadhasivam, 2012).</p>
+</section>
+<section id="user-modelingprofiling-knowledge-of-user-preferences" class="level3">
+<h3 class="anchored" data-anchor-id="user-modelingprofiling-knowledge-of-user-preferences">3.8. User modeling/profiling (Knowledge of user preferences):</h3>
+<p>User profiling is an important component of recommender systems. To make more individual specific recommendations it is needed to construct a user profile. As it is stated in (Liu et al., 2010), (Das et al., 2007), (Saranya.K.G and Sadhasivam, 2012) there are many different approaches for user profiling.</p>
+</section>
+<section id="gray-sheep-problem" class="level3">
+<h3 class="anchored" data-anchor-id="gray-sheep-problem">3.9. Gray sheep problem:</h3>
+<p>Since collaborative filtering recommends items according to the user’s common interests with other users, it is not possible to recommend proper items to people whose preferences do not consistently agree or disagree with any group of people (Su and Khoshgoftaar, 2009). When the total number of users increases, the possibility of this problem occuring decreases (Borges and Lorena, 2010).</p>
+</section>
+<section id="serendipity-over-specialization-portfolio-problem" class="level3">
+<h3 class="anchored" data-anchor-id="serendipity-over-specialization-portfolio-problem">3.10. Serendipity (over-specialization, portfolio) problem</h3>
+<p>This is the problem when the system recommends similar or the same items with the already recommended ones. For the news domain, a news item written differently in different news sources may be recommended by the recommender system as different articles. It is obvious that the users would not be happy to get the same or similar recommendations. The system should always be able to discover new items to recommend by avoiding the same items. In (Iaquinta et al., 2008) the problem is discussed in detail for content-based systems but it is also a problem for collaborative filtering systems (Borges and Lorena, 2010).</p>
+</section>
+<section id="privacy-problems" class="level3">
+<h3 class="anchored" data-anchor-id="privacy-problems">3.11. Privacy problems</h3>
+<p>To make proper recommendations to a user, the system should know about the users’ past preferences, interests and even the relations with other people. This requires the storage of detailed data about the user and the analysis of this data that can cause privacy issues (Garcin et al., 2013).</p>
+</section>
+<section id="neighbor-transitivity" class="level3">
+<h3 class="anchored" data-anchor-id="neighbor-transitivity">3.12. Neighbor transitivity</h3>
+<p>Neighbor transitivity occurs when the database is very sparse. Even if there are two users who have similar interests, the system cannot detect them because of the lack of ratings they have on similar items (Su and Khoshgoftaar, 2009).</p>
+</section>
+<section id="synonymy" class="level3">
+<h3 class="anchored" data-anchor-id="synonymy">3.13. Synonymy</h3>
+<p>Same items can be named differently by separate resources and it is not possible for machines to understand that they refer the same item. For example; even if the “children’s movie” and “children’s film” have the same meaning, they can be treated as different items by the recommender system (Su and Khoshgoftaar, 2009).</p>
+</section>
+</section>
+<section id="approaches-of-news-recommender-systems" class="level2">
+<h2 class="anchored" data-anchor-id="approaches-of-news-recommender-systems">4. APPROACHES OF NEWS RECOMMENDER SYSTEMS</h2>
+<p>In this section we explain the different approaches to the most addressed challenges of news recommender systems. Some of these challenges are not completely specific to the news domain. But in most of the previous works about news recommender systems these challenges are prioritized and mostly addressed. The summary of which approach addresses to solve which particular challenge can be seen in Table 1. The term N/A is used for defining that particular challenge is not addressed or it is unknown if the challenge is addressed or not in that work.</p>
+<p>Table 1: Different works on news recommendation with the challenges they addresses to solve.</p>
+<p><img src="https://d3i71xaburhd42.cloudfront.net/4657e2e90831bd9fd6c765de17f0457502bb2997/5-Table1-1.png"></p>
+<section id="cold-start-problem" class="level3">
+<h3 class="anchored" data-anchor-id="cold-start-problem">4.1. Cold-Start Problem</h3>
+<p>Since collaborative filtering finds similarities between different users’ and makes recommendations by using the different preferences of similar users, it is impossible to recommend a new item which is not evaluated yet. Another aspect of this problem is that it is impossible to recommend any items for completely new users. Cold-start problem is the most common problem for the applications that use collaborative filtering. As it is mentioned in (Liu et al., 2010) for some researchers it is one the most important disadvantages of collaborative filtering approach. To solve this problem (Liu et al., 2010), (Fortuna et al., 2010) and (Lin et al., 2012) are proposed a hybrid method using the collaborative filtering and content-based filtering together. In (Liu et al., 2010), it is proposed to use the personalization for recommending new articles which is building a profile for the user’s genuine interests. In (Lin et al., 2012), to handle the cold-start problem, the system includes the opinions of chosen experts (who uses the social networks have significant influence on new users). So that the system can make recommendations to a new user. By using the TF-IDF method new items can also be recommended. In (Fortuna et al., 2010), it is proposed another approach that is grouping the users as an old or a new user according to the number of articles they read. For each group of users, a separate model is trained for predicting the most interesting news category. And the top new article from each filtered category is recommended to the user. (Tavakolifard et al., 2013) proposes an architecture which considers the users’ long term preferences, short term preferences and the current context. So that cold start problem can be eliminated by using the current contextual information for first recommendations. In (Lee and Park, 2007) it is checked that if the user is new or not. If it is a new user than she is temporarily placed in a similar segment on the basis of demographics and the first recommendations done according to the preferences of that demographic segment. (Garcin et al., 2013) proposes a system which works for anonymous users. When a user starts to read a news item the system generates recommendations and during the session of the user the system updates the model and makes better recommendations.</p>
+</section>
+<section id="recency-1" class="level3">
+<h3 class="anchored" data-anchor-id="recency-1">4.2. Recency</h3>
+<p>We see that nearly in all the works done on news recommendation the importance of recency is addressed. In (Yeung and Yang, 2010) recency mentioned as an important property of a recommender system and it is proposed a proactive news recommender system for mobile devices. Since the environment for a mobile user is highly dynamic it is a challenge to deliver the most proper and recent information to the user. In the proposed system a Hybrid P2P system is used to deliver the just-in-time information to users’ mobile device. A pure P2P system is not suitable for mobile devices since it requires lots of communication with other devices. In the proposed architecture, mobile device connects one of the servers in the network and sends the context information. Recommendation is done by the server (which gets the recent news articles constantly from RSS) by using this context information of the user which includes user profile, location, usage patterns, peer ratings etc. As a different approach, (Wen et al., 2012) includes the time factor in recommendation process. In this approach, to recommend a news item, time factor is taken into account as a coefficient in addition to the user interest and preference models. Similarly, in (Lee and Park, 2007) weights of articles is calculated by the degree of importance and recency of that article. In (Fortuna et al., 2010), news categories are determined for each user according to the user’s preferences and the newest article of each category is selected for recommendation. On the other hand, in (Li et al., 2011) it is constructed a news profile for news items which includes dynamic characteristics like recency and popularity. (Liu et al., 2010) considers the news trends to make proper recommendations. Since news trends mostly composed of recent news it can also be taken as a challenge of recency.</p>
+</section>
+<section id="implicit-feedback" class="level3">
+<h3 class="anchored" data-anchor-id="implicit-feedback">4.3. Implicit Feedback</h3>
+<p>To predict the future interests of a user and to make proper recommendations, the system needs to know the past interests of the user. There are two ways of learning about the past interests of a user: Explicit and implicit feedbacks. To collect explicit feedbacks it is needed to interact with the user continuously and ask if the user liked the item or not, how much she liked it and maybe other questions about the system in general. Both for the users and for the system it is not practical to continuously interact with the user. Especially in mobile devices it is hard to manually collect personal information (especially textual information) from the user. (Yeung and Yang, 2010) So it is desired to make user profiling and filtering automatically. The system should be able to collect implicit feedbacks effectively while protecting the user privacy. In (Garcin et al., 2013), it is stated that to overcome the lack of data about the users most systems require the users to have logged in the system which can cause privacy issues. Implicit feedbacks are mostly taken from the log analysis of users’ history. In (Liu et al., 2010), to predict the future user interests, a large-scale log analysis is done over the registered users’ history data and the change of user interests are observed. Similarly in (Wen et al., 2012) user’s interest and preference models are constructed by using the user’s navigational data. Also in (Tavakolifard et al., 2013) the user’s behaviors are used for detecting some preferences of the user. In (Lee and Park, 2007) regular analysis is done over the history of the user and the system learns about various preferences.</p>
+</section>
+<section id="changing-user-interest" class="level3">
+<h3 class="anchored" data-anchor-id="changing-user-interest">4.4. Changing User Interest</h3>
+<p>It is known that as time passes the interests of people change. The preferences of people about movies, music or books generally show a slight difference within short periods of time. But in the news domain it is again very different from other domains. The news reading preferences of people can be affected by on going circumstances in the world as well as their age, cultural level and even their mood. So, predicting future interests of users can be a real challenge for news recommendation. (Liu et al., 2010) addresses this challenge and proposes an architecture to predict the future user interests. To do this a hybrid news recommender system is proposed where a large-scale log analysis is done over the registered users’ past activities. Click distribution over different news categories is computed both for individuals and groups in a monthly basis and the change of user interests are observed. For prediction of user interests, Bayesian framework is used. Then the predictions are used in information filtering method. To make proper recommendations it is combined with the existing collaborative filtering method. In (Lee and Park, 2007), the change of user interests are tracked by observing and comparing the long-term and short-term preferences. The comparison of coefficients of long-term and short-term preferences changes the weight of category preferences. So if there is a change in the category preference of a user over time, it can be used for making proper recommendations. (Wen et al., 2012) creates a model for the user’s degree of interest to a specific topic by analyzing the navigational data (frequently visiting a web page related with a specific topic shows the user is interested in that subject) and then it is updated as the user keeps browsing web pages. To keep track of the changing user interest (Saranya.K.G and Sadhasivam, 2012) proposes two kinds of user profiles: Static and dynamic user profiles. Static user profile includes the user’s sign up information like user name and favorite topic where the dynamic user profile is constructed by using the implicit user data in every session.</p>
+</section>
+<section id="scalability-1" class="level3">
+<h3 class="anchored" data-anchor-id="scalability-1">4.5. Scalability</h3>
+<p>Since scalability problem applies to every computer related system it is also one of the most important challenges in recommender systems. If we want to build a useful recommender system it is obvious that it must be scalable. In news domain, scalability problem combines with other challenges which makes the news recommenders more challenging to build. In (Li et al., 2011) it is aimed a scalable news recommendation system by clustering the news articles and eliminating the unnecessary similarity computations. So that the system spends less time for computation and can response faster. In (Das et al., 2007) to be able to serve millions of users they proposed a new MinHash (a probabilistic clustering method) based user clustering algorithm, redesigned the PLSI (Probabilistic Latent Semantic Indexing, a model for performing collaborative filtering) as a MapReduce (a model for computing large scale data on clusters) computation and used item covisitation technique (a method for determining the user-item relations) for a more scalable system. (Saranya.K.G and Sadhasivam, 2012) discusses the need of scalability in efficient recommender systems. And the Hadoop framework handles the issues like reliability and scalability in their applications. Another different approach for news recommendation includes context trees. In (Garcin et al., 2013), it is discussed the scalability problem does not occurs within this approach since it requires only one tree and the tree structure is very limited because of the applied context constraints.</p>
+</section>
+<section id="data-sparsity-1" class="level3">
+<h3 class="anchored" data-anchor-id="data-sparsity-1">4.6. Data Sparsity</h3>
+<p>Even though it is one of the most important challenges of collaborative filtering method, data sparsity is not addressed in most of the news recommender system approaches. Data sparsity occurs when the number of users or items are much higher than the other one. In this case when the user-item matrix is constructed, the matrix would be very sparse. In (Yeung and Yang, 2010), it is discussed that using Bayesian Network makes it easy to eliminate the data sparsity. On the other hand in (Saranya.K.G and Sadhasivam, 2012) HBASE (a non-relational distributed database) is used to store the data where it can provide fault tolerant storage for sparse data. Another solution for data sparsity is to use the hybrid approach (Lin et al., 2012).</p>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">5. DISCUSSION</h2>
+<p>News recommendation is a specific domain in recommender systems which has special challenges and characteristics. Even though some of the challenges are shared with recommender systems in general, others may require different approaches to solve. As it is seen in Table 1, different works addresses to solve particular challenges. We see that all the approaches try to come up with solutions to as much challenges as possible. Some of them highlights one or two challenges and addresses the others as secondary challenges.</p>
+<p>Since they are addressed and solved nearly in all of the works, recency and implicit feedback challenges seem the easiest ones to solve. For recency, most approaches prefer to recommend the latest headlines. Calculating the recency by using a coefficient which decreases in time is also another commonly used solution (Wen et al., 2012), (Lee and Park, 2007). Implicit feedback is also one of the most addressed challenges. It highly depends on the data extraction from users’ navigational history or log analysis. The analysis and storage of this huge amount of data about users can cause privacy issues when it is required the users to log in to the system (Garcin et al., 2013). Also it reduces the scalability which is another important challenge. As we can see in Table 1, nearly all approaches have solutions for these two challenges. On the other hand, we see that scalability and data sparsity are the challenges which less solutions are offered. For some approaches like (Tavakolifard et al., 2013) data sparsity challenge is not available since it is a problem only for collaborative filtering method. It is also possible to eliminate the problems which belong to only one of methods by using hybrid systems.</p>
+<p>As we can see in Table 2, some of the methods have minor differences but even though there are similarities between methods some approaches like context tree approach (Garcin et al., 2013) really differ from others. Some approaches include only one of the filtering methods where others include both of them (hybrid methods). In approaches that use hybrid method, it is possible to see that they use or propose different algorithms. (Yeung and Yang, 2010) proposes a new method for news ranking which is called AHP (Analytic Hierarchy Process) model. AHP of-fers a solution to assign weights for different ranking factors. (Fortuna et al., 2010) proposes an SVM (Support Vector Machine) (a machine learning model) based news recommender system. (Saranya.K.G and Sadhasivam, 2012) proposes calculation methods for adaptive user profiling, dynamic neighborhood calculation and document ranking calculation.</p>
+<p>Using context trees for news recommendation is proposed in (Garcin et al., 2013) where it is used together with LDA (Latent Dirichlet Allocation) and BVMM (Bayesian Variable-order Markov Model) algorithms and defined as a scalable and effective solution to most of the challenges. LDA is also used in (Li et al., 2011) for the representation of topic distributions in a text. Bayesian Network is the most widely used technique to model user interests (Yeung and Yang, 2010), (Wen et al., 2012), (Liu et al., 2010). Another technique used for user profiling is NLP (Natural Language Processing) (Li et al., 2011), (Tavakolifard et al., 2013). There are different tools used for NLP technique like GATE and Apache OpenNLP library. For news items clustering LSH (Locality Sensitive Hashing) and MinHash (a probabilistic clustering method, a scheme for LSH (Das et al., 2007)) techniques are used in (Li et al., 2011). MinHash is used together with PLSI (Probabilistic Latent Semantic Indexing) in (Das et al., 2007). In content based filtering TF-IDF (Term FrequencyInverse Document Frequency) is one of the mostly used techniques. In addition to TF-IDF, (Tavakolifard et al., 2013) uses NER (Named Entity Recognition) model to identify the names and location.</p>
+<p>Table 2: Methods used in different news recommender systems.</p>
+<p><img src="https://d3i71xaburhd42.cloudfront.net/4657e2e90831bd9fd6c765de17f0457502bb2997/7-Table2-1.png"></p>
+<p>In Table 2 we can see that nearly in all of the works it is done log (or click) analysis over the usage data. Most systems require to users log in to the system. They gather data both from the sign up process and from the actions of the user while she is using the system. The approach in (Garcin et al., 2013) does not require any log in to the system, thus it makes recommendations only for the active session without determining who the user is. The other systems learn about users and they make recommendations based on the long term preferences of the user. By using log analysis it is also possible to track the change of user interests.</p>
+<p>As the number of researches grow in recommender systems and specifically in news recommendation domain, we see that the number of hybrid systems increases. Recent evaluations show that hybrid systems tend to outperform other systems.</p>
+<p>Evaluation and quantitative comparison of different recommender systems are other challenging aspects of recommender system research. Even though there are several evaluation methods for measuring the performance of the system, it is hard to measure the qualitative aspects like user satisfaction. There are some reasons which makes the quantitative comparison of the references we addressed in this paper not possible for us. First, they use different evaluation metrics which are not comparable. Second, because of the challenges they solve are different, the systems are not identical to each other to make quantitative comparisons.</p>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">6. CONCLUSIONS</h2>
+<p>Beginning from the first half of 90’s, recommender system research continues to grow in different application domains. Nowadays it is not hard to see a recommender system working in the background of the web site you have visited and recommends you music or shopping items. Even though these useful applications of recommender systems exist, there are still many challenges for a true personalized recommender system. As the number of online news sources increases it becomes harder for an end user to find what she is looking for. Thus the need for a news recommender system increases.</p>
+<p>In this paper, the challenges and different methods of news recommendation domain are presented. It is pointed out which approaches solve different challenges and how they do this. Our current framework for comparing recommender systems in news domain deals with content-based, collaborative and hybrid recommendation approaches, though we intend to expand it with recent results from semantically based recommender systems. Including semantic representations in the recommendation process helps us to understand user needs and news content and can be valuable when several of the challenges above are addressed.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
