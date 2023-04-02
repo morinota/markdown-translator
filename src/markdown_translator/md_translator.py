@@ -133,7 +133,7 @@ class DeepLTranslator:
         target_tag_info = soup_obj.find(
             name=self.TARGET_TAG_NAME,
             class_=self.TARGET_TAG_CLASS,
-        )  # html内を検索するタグ名
+        )
         # with open("my_file.html", "w", encoding="utf-8") as f:
         #     f.write(str(soup_obj))
 
@@ -160,6 +160,10 @@ class DeepLTranslator:
         # "Hoge et al. (2023)"の場合にsplitしないように変換する.
         pattern = r"\. \(([0-9]*)\)"
         base_query = re.sub(pattern, r".(\g<1>)", base_query)
+
+        # "According to Fig. 8, A is B."の場合にsplitしないように変換する.
+        pattern = r"\. ([0-9]*)"
+        base_query = re.sub(pattern, r".\g<1>", base_query)
         return base_query
 
     @staticmethod
