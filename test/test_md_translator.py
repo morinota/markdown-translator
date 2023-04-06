@@ -23,7 +23,7 @@ def test_split_querys() -> None:
     ]
 
     splited_querys_actual = DeepLTranslator._split_querys(base_query)
-    assert splited_querys_actual
+    assert splited_querys_actual == splited_querys_expected
 
 
 def test_preprocess() -> None:

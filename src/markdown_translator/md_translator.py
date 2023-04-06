@@ -150,7 +150,7 @@ class DeepLTranslator:
         """簡易的に、query を". "で分割している."""
         splitted_querys = base_query.split(". ")
         length = len(splitted_querys)
-        if length:
+        if length == 1:
             return splitted_querys
         return [f"{query}." if idx < length - 1 else query for idx, query in enumerate(splitted_querys)]
 
