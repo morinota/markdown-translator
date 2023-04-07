@@ -14,12 +14,13 @@ def test_parse_query() -> None:
 
 
 def test_split_querys() -> None:
-    base_query = "A is B. B is C. Hoge is based on Morita et al. (2023)."
+    base_query = "A is B. B is C. Hoge is based on Morita et al. (2023). Gupta et al.[12] proposed hogehoge."
     splited_querys_expected = [
         "A is B.",
         "B is C.",
         "Hoge is based on Morita et al.",
         "(2023).",
+        "Gupta et al.[12] proposed hogehoge.",
     ]
 
     splited_querys_actual = DeepLTranslator._split_querys(base_query)
@@ -39,3 +40,9 @@ def test_preprocess() -> None:
     preprocessed_query_actual = DeepLTranslator._preprocess(base_query_2)
 
     assert preprocessed_query_actual == preprocessed_query_expected_2
+
+    base_query_3 = "Gupta et al. [12] proposed hogehoge."
+    preprocessed_query_expected_3 = "Gupta et al.[12] proposed hogehoge."
+    preprocessed_query_actual = DeepLTranslator._preprocess(base_query_3)
+
+    assert preprocessed_query_actual == preprocessed_query_expected_3

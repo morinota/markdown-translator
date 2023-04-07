@@ -94,15 +94,13 @@ class DeepLTranslator:
         self,
         base_query: str,
     ) -> Tuple[List[str], List[str]]:
-
         self.URL_FORMAT
         source_sentences = []
         target_sentences = []
 
         base_query_preprocessed = self._preprocess(base_query)
-        splitted_querys = self._split_querys(base_query)
+        splitted_querys = self._split_querys(base_query_preprocessed)
         for query in splitted_querys:
-
             parsed_query = self._parse_query(query)
             url = self.URL_FORMAT.format(
                 from_lang=self.from_lang,
@@ -164,6 +162,11 @@ class DeepLTranslator:
         # "According to Fig. 8, A is B."の場合にsplitしないように変換する.
         pattern = r"\. ([0-9]*)"
         base_query = re.sub(pattern, r".\g<1>", base_query)
+
+        # "Gupta et al. [12] proposed hogehoge."の場合にsplitしないように変換する.
+        pattern = r"et al\. "
+        base_query = re.sub(pattern, r"et al\.", base_query)
+
         return base_query
 
     @staticmethod
