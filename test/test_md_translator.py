@@ -46,3 +46,15 @@ def test_preprocess() -> None:
     preprocessed_query_actual = DeepLTranslator._preprocess(base_query_3)
 
     assert preprocessed_query_actual == preprocessed_query_expected_3
+
+    base_query_4 = "Hoge is Hoge. Fuga is Fuga. Piyo is Piyo."
+    preprocessed_query_expected_4 = "Hoge is Hoge. Fuga is Fuga. Piyo is Piyo."
+    preprocessed_query_actual = DeepLTranslator._preprocess(base_query_4)
+
+    assert preprocessed_query_actual == preprocessed_query_expected_4
+
+    base_query_5 = "See e.g. [13]. I like A. (i.e. I love A.)"
+    preprocessed_query_expected_5 = "See e.g.[13]. I like A. (i.e.I love A.)"
+    preprocessed_query_actual = DeepLTranslator._preprocess(base_query_5)
+
+    assert preprocessed_query_actual == preprocessed_query_expected_5

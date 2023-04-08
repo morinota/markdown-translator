@@ -155,18 +155,21 @@ class DeepLTranslator:
     @staticmethod
     def _preprocess(base_query: str) -> str:
         """_splitの正常動作を阻害しうる要素を除去/変換する"""
-        # "Hoge et al. (2023)"の場合にsplitしないように変換する.
+        # # "Hoge et al. (2023)"の場合にsplitしないように変換する.
         pattern = r"\. \(([0-9]*)\)"
         base_query = re.sub(pattern, r".(\g<1>)", base_query)
 
         # "According to Fig. 8, A is B."の場合にsplitしないように変換する.
-        pattern = r"\. ([0-9]*)"
-        base_query = re.sub(pattern, r".\g<1>", base_query)
+        pattern = r"(\.\s*)(\d+)"
+        base_query = re.sub(pattern, r".\2", base_query)
 
         # "Gupta et al. [12] proposed hogehoge."の場合にsplitしないように変換する.
         pattern = r"et al\. "
-        base_query = re.sub(pattern, r"et al\.", base_query)
+        base_query = re.sub(pattern, r"et al.", base_query)
 
+        # "See e.g. [13]."や "(i.e. I love A.)"の場合にsplitしないように変換する.
+        pattern = r"(.\..\.)(\s*)(.)"
+        base_query = re.sub(pattern, r"\1\3", base_query)
         return base_query
 
     @staticmethod

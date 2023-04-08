@@ -12,6 +12,8 @@ Second, very few studies consider to use user feedback other than click / gno cl
 
 We further consider user return pattern as a supplement to click / no click label in order to capture more user feedback information.
 
+Subsequently, Gupta et al. [12] described a specialized system to generate Tweet recommendations in real time, insights from which were later deployed in GraphJet [31].
+
 ## math etc.
 
 $$
