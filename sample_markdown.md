@@ -14,6 +14,10 @@ We further consider user return pattern as a supplement to click / no click labe
 
 Subsequently, Gupta et al. [12] described a specialized system to generate Tweet recommendations in real time, insights from which were later deployed in GraphJet [31].
 
+<!-- "/"だけでなく、"|"のケースも翻訳が途切れてしまう... -->
+
+Given a sample from P(O|P), we can think of the IPS estimator from Eq.(10) as the Empirical Risk Rˆ(Yˆ ) that estimates R(Yˆ ) for any Yˆ .
+
 ## math etc.
 
 $$
