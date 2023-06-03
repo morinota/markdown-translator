@@ -8,8 +8,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 from markdown_reader.markdown_content_class import MarkdownContent
-from src.markdown_translator.query_parser import QueryParserInterface
-from src.markdown_translator.sentence_splitter import SentenceSplitterInterface
+from src.markdown_translator.query_parser import QueryParser, QueryParserInterface
+from src.markdown_translator.sentence_splitter import SentenceSplitter, SentenceSplitterInterface
 
 logger = logging.getLogger(name=__name__)
 logger.setLevel(logging.DEBUG)
@@ -26,7 +26,15 @@ class MarkdownTranslatorWrapper:
         from_lang: str = "en",
         to_lang: str = "ja",
     ):
-        self.deepl_translator = DeepLTranslator(driver, from_lang, to_lang)
+        query_parser = QueryParser()
+        sentence_splitter = SentenceSplitter()
+        self.deepl_translator = DeepLTranslator(
+            driver,
+            query_parser,
+            sentence_splitter,
+            from_lang,
+            to_lang,
+        )
 
     def translate(
         self,
