@@ -18,6 +18,12 @@ Subsequently, Gupta et al. [12] described a specialized system to generate Tweet
 
 Given a sample from P(O|P), we can think of the IPS estimator from Eq.(10) as the Empirical Risk Rˆ(Yˆ ) that estimates R(Yˆ ) for any Yˆ .
 
+## 翻訳の前半が途切れるケースの例:
+
+The first is that they may not be general enough to overcome all sources of bias, i.e.they are often designed to compensate for a specific kind of bias: for example, the accuracy metric that is proposed in [24] is able to correct only for the long-tail popularity bias in a dataset.
+
+<!-- for example以下のみが翻訳されてしまう...! -->
+
 ## math etc.
 
 $$

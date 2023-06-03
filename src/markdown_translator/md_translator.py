@@ -1,15 +1,15 @@
 import logging
 import re
 import time
-from email.mime import base
-from typing import Generator, List, Optional, Tuple
+from typing import List, Tuple
 from urllib import parse
 
-import bs4
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
 from markdown_reader.markdown_content_class import MarkdownContent
+from src.markdown_translator.query_parser import QueryParserInterface
+from src.markdown_translator.sentence_splitter import SentenceSplitterInterface
 
 logger = logging.getLogger(name=__name__)
 logger.setLevel(logging.DEBUG)
@@ -83,10 +83,14 @@ class DeepLTranslator:
     def __init__(
         self,
         driver: webdriver.Chrome,
+        query_parser: QueryParserInterface,
+        splitter: SentenceSplitterInterface,
         from_lang: str = "en",
         to_lang: str = "ja",
     ) -> None:
         self.driver = driver
+        self.query_parser = query_parser
+        self.splitter = splitter
         self.to_lang = to_lang
         self.from_lang = from_lang
 
@@ -98,10 +102,9 @@ class DeepLTranslator:
         source_sentences = []
         target_sentences = []
 
-        base_query_preprocessed = self._preprocess(base_query)
-        splitted_querys = self._split_querys(base_query_preprocessed)
+        splitted_querys = self.splitter.split(base_query)
         for query in splitted_querys:
-            parsed_query = self._parse_query(query)
+            parsed_query = self.query_parser.parse(query)
             url = self.URL_FORMAT.format(
                 from_lang=self.from_lang,
                 to_lang=self.to_lang,
@@ -132,53 +135,10 @@ class DeepLTranslator:
             name=self.TARGET_TAG_NAME,
             class_=self.TARGET_TAG_CLASS,
         )
-        # with open("my_file.html", "w", encoding="utf-8") as f:
-        #     f.write(str(soup_obj))
 
         text_in_tag = target_tag_info.text if target_tag_info is not None else ""
         return text_in_tag
 
-    @staticmethod
-    def _is_translated_properly(translated_text: str) -> bool:
+    def _is_translated_properly(self, translated_text: str) -> bool:
         """Check if the acquired translated_text is appropriate."""
         return len(translated_text) > 0
-
-    @staticmethod
-    def _split_querys(base_query: str) -> List[str]:
-        """簡易的に、query を". "で分割している."""
-        splitted_querys = base_query.split(". ")
-        length = len(splitted_querys)
-        if length == 1:
-            return splitted_querys
-        return [f"{query}." if idx < length - 1 else query for idx, query in enumerate(splitted_querys)]
-
-    @staticmethod
-    def _preprocess(base_query: str) -> str:
-        """_splitの正常動作を阻害しうる要素を除去/変換する"""
-        # # "Hoge et al. (2023)"の場合にsplitしないように変換する.
-        pattern = r"\. \(([0-9]*)\)"
-        base_query = re.sub(pattern, r".(\g<1>)", base_query)
-
-        # "According to Fig. 8, A is B."の場合にsplitしないように変換する.
-        pattern = r"(\.\s*)(\d+)"
-        base_query = re.sub(pattern, r".\2", base_query)
-
-        # "Gupta et al. [12] proposed hogehoge."の場合にsplitしないように変換する.
-        pattern = r"et al\. "
-        base_query = re.sub(pattern, r"et al.", base_query)
-
-        # "See e.g. [13]."や "(i.e. I love A.)"の場合にsplitしないように変換する.
-        pattern = r"(.\..\.)(\s*)(.)"
-        base_query = re.sub(pattern, r"\1\3", base_query)
-        return base_query
-
-    @staticmethod
-    def _parse_query(query: str) -> str:
-        parsed_query = parse.quote(query, safe="")
-        # "/"で翻訳文章が切れるケースへの対処を追加
-        parsed_query = re.sub(
-            pattern=r"2F",
-            repl=r"5C%2F",
-            string=parsed_query,
-        )  # "/"が"5C%2F"にparseされて欲しい.("5C"は"¥"のurl encode, "2F"は"/"のurl encode)
-        return parsed_query
