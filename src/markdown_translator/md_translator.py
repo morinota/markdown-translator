@@ -8,8 +8,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 from markdown_reader.markdown_content_class import MarkdownContent
-from src.markdown_translator.query_parser import QueryParser, QueryParserInterface
-from src.markdown_translator.sentence_splitter import SentenceSplitter, SentenceSplitterInterface
+from markdown_translator.query_parser import QueryParser, QueryParserInterface
+from markdown_translator.sentence_splitter import SentenceSplitter, SentenceSplitterInterface
 
 logger = logging.getLogger(name=__name__)
 logger.setLevel(logging.DEBUG)
