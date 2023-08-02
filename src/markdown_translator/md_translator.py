@@ -7,7 +7,7 @@ from urllib import parse
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
-from markdown_reader.markdown_content_class import MarkdownContent
+from entities.markdown_content_class import MarkdownContent
 from markdown_translator.query_parser import QueryParser, QueryParserInterface
 from markdown_translator.sentence_splitter import SentenceSplitter, SentenceSplitterInterface
 

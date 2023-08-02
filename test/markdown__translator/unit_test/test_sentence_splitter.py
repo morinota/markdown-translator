@@ -1,4 +1,4 @@
-from src.markdown_translator.sentence_splitter import SentenceSplitter
+from markdown_translator.sentence_splitter import SentenceSplitter
 
 
 class TestSentenceSplitter:

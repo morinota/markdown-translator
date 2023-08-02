@@ -1,4 +1,4 @@
-from src.markdown_translator.query_parser import QueryParser
+from markdown_translator.query_parser import QueryParser
 
 
 class TestParseQuery:

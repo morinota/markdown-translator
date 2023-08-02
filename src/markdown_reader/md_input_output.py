@@ -1,7 +1,7 @@
 import re
 from typing import List
 
-from markdown_reader.markdown_content_class import MarkdownContent
+from entities.markdown_content_class import MarkdownContent
 
 
 class MarkdownReader:

@@ -11,7 +11,7 @@ from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
 from pdfminer.pdfparser import PDFParser
 
-from markdown_reader.pdf_content_base import PDFContentBase
+from entities.pdf_content_base import PDFContentBase, PDFContentTypes
 
 
 class PDFContentExtractorInterface(abc.ABC):
@@ -41,13 +41,9 @@ class PDFContentExtractor(PDFContentExtractorInterface):
         for page in PDFPage.create_pages(document):
             interpreter.process_page(page)
             layout = device.get_result()
-            print("objs------------------")
             self._get_pdf_contents(layout, results)
-        for pdf_content in results:
-            if pdf_content.fontsize_mode >= 15:
-                print(pdf_content.raw_text, pdf_content.fontname_mode)
 
-        self._save_raw_data(results)
+        # self._save_raw_data(results)
 
         return results
 
@@ -56,21 +52,20 @@ class PDFContentExtractor(PDFContentExtractorInterface):
         を見つけた場合にその情報をresultsに追加する。
         振る舞いとしては、図表内のTextLineは無視する。
         """
-        # print(f"type of layout: {type(layout)}")
         if not isinstance(layout, LTContainer):
             return
+        if isinstance(layout, PDFContentTypes.FIGURE):
+            return
         for obj in layout:
-            if isinstance(obj, LTTextLine):
+            if isinstance(obj, PDFContentTypes.TEXT_LINE_HORIZONTAL):
                 char_fontsize = mode([char.size for char in obj if isinstance(char, LTChar)])
                 char_fontname = mode([char.fontname for char in obj if isinstance(char, LTChar)])
-                # print(char_fontsize)
-                # print(char_fontname)
                 results.append(
                     PDFContentBase(
                         bbox=obj.bbox,
                         raw_text=obj.get_text(),
                         content_type=type(obj),
-                        fontsize_mode=char_fontsize,
+                        fontsize_mode=int(char_fontsize),
                         fontname_mode=char_fontname,
                     )
                 )

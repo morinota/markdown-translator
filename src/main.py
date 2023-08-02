@@ -4,7 +4,7 @@ from typing import List
 
 from selenium import webdriver
 
-from markdown_reader.markdown_content_class import MarkdownContent
+from entities.markdown_content_class import MarkdownContent
 from markdown_reader.md_input_output import MarkdownCreator, MarkdownReader
 from markdown_translator.md_translator import MarkdownTranslatorWrapper
 
@@ -45,7 +45,7 @@ def main(input_md_path: Path) -> None:
 
 if __name__ == "__main__":
     # NOTE: 動作確認の場合は、sample_markdown.mdを指定する.
-    input_md_path_str = sys.argv[1]  # NOTE: idx=0はスクリプトファイル名になってしまう.
+    input_md_path_str = sys.argv[1]  # NOTE: idx=0はスクリプトファイル名になってしまう。
 
     print(f"Translate .md document : {input_md_path_str}")
 
