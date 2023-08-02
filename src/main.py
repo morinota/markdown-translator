@@ -2,7 +2,6 @@ import sys
 from pathlib import Path
 from typing import List
 
-import websockets
 from selenium import webdriver
 
 from markdown_reader.markdown_content_class import MarkdownContent
@@ -45,7 +44,6 @@ def main(input_md_path: Path) -> None:
 
 
 if __name__ == "__main__":
-
     # NOTE: 動作確認の場合は、sample_markdown.mdを指定する.
     input_md_path_str = sys.argv[1]  # NOTE: idx=0はスクリプトファイル名になってしまう.
 
