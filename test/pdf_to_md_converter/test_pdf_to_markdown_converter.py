@@ -67,10 +67,10 @@ def test_pdf_content_with_equation_font_is_converted_to_equation_md_content() ->
     # Arrange
     pdf_contents = [
         PDFContentBase(
-            raw_text="Off-Policy Evaluation for Large Action Spaces via Embeddings\n",
+            raw_text="Bias(j) + CNF(m)",
             content_type=PDFContentTypes.TEXT_LINE_HORIZONTAL,
-            fontsize_mode=18,
-            fontname_mode=PDFFontsToTagConfig.HEADERS_FONTS[0],
+            fontsize_mode=12,
+            fontname_mode=PDFFontsToTagConfig.EQUATION_FONTS[0],
         ),
     ]
     sut = PDF2MarkdownConverter()
@@ -81,8 +81,8 @@ def test_pdf_content_with_equation_font_is_converted_to_equation_md_content() ->
     # Assert
     md_contents_expected = [
         MarkdownContentBase(
-            MarkdownTagName.HEADER_1,
-            "Off-Policy Evaluation for Large Action Spaces via Embeddings\n",
+            MarkdownTagName.EQUATION,
+            "Bias(j) + CNF(m)",
         )
     ]
     assert md_contents == md_contents_expected
