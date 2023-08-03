@@ -27,6 +27,7 @@ class MarkdownTagName(Enum):
     NUMBER_LIST_ITEM = "number_li"
     IMAGE = "img"
     CODE_BLOCK = "code_block"
+    PLAIN_TEXT = "plain_text"
 
 
 @dataclasses.dataclass

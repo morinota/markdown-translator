@@ -1,52 +1,29 @@
 from entities.markdown_content_base import MarkdownContentBase, MarkdownTagName
 from entities.pdf_content_base import PDFContentBase
-
-
-class PDFFontsToTagConfig:
-    EQUATION_FONTS = ["YNTGTF+CMR10"]
-    HEADERS_FONTS = ["ZEAUGF+NimbusRomNo9L-Medi"]
-    PLAIN_TEXT_FONTS = []
+from use_cases.pdf_2_md_tag_classfier import PDF2MdTagClassifier
 
 
 class PDF2MarkdownConverter:
-    TAG_BY_LOWEST_FONTSIZE = {
-        MarkdownTagName.HEADER_1: 15,
-        MarkdownTagName.HEADER_2: 12,
-        MarkdownTagName.HEADER_3: 11,
-    }
-
     def __init__(self) -> None:
-        pass
+        self.md_tag_classifier = PDF2MdTagClassifier()
 
     def convert(
         self,
         pdf_contents: list[PDFContentBase],
     ) -> list[MarkdownContentBase]:
-        md_contents = []
-        previous_fontsize = None
-        previous_fontname = None
+        md_contents: list[MarkdownContentBase] = []
+        previous_md_type = None
         for pdf_content in pdf_contents:
-            if self._is_headers_tag(pdf_content):
-                md_contents.append(MarkdownContentBase(self._clasify_header_type(pdf_content), pdf_content.raw_text))
+            md_tag = self.md_tag_classifier.classify(pdf_content)
+            raw_text = ""
+            if md_tag == MarkdownTagName.PLAIN_TEXT and previous_md_type == MarkdownTagName.PLAIN_TEXT:
+                previous_plain_text_md = md_contents.pop()
+                raw_text += previous_plain_text_md.text_raw + " "
 
+            md_content = MarkdownContentBase(
+                md_tag,
+                raw_text + pdf_content.raw_text,
+            )
+            md_contents.append(md_content)
+            previous_md_type = md_content.tag_name
         return md_contents
-
-    def _is_headers_tag(self, pdf_content: PDFContentBase) -> bool:
-        """headers tagか否かを判定してboolを返す。"""
-        if pdf_content.fontname_mode not in PDFFontsToTagConfig.HEADERS_FONTS:
-            return False
-        if pdf_content.fontsize_mode < self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_3]:
-            return False
-        return True
-
-    def _clasify_header_type(self, pdf_content: PDFContentBase) -> MarkdownTagName:
-        """どのheaderかを判定して返す"""
-        fontsize = pdf_content.fontsize_mode
-        fontname = pdf_content.fontname_mode
-        if fontsize >= self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_1]:
-            return MarkdownTagName.HEADER_1
-        elif fontsize >= self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_2]:
-            return MarkdownTagName.HEADER_2
-        elif fontsize >= self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_3]:
-            return MarkdownTagName.HEADER_3
-        return MarkdownTagName.HEADER_4

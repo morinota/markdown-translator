@@ -62,7 +62,7 @@ class PDFContentExtractor(PDFContentExtractorInterface):
                 char_fontname = mode([char.fontname for char in obj if isinstance(char, LTChar)])
                 results.append(
                     PDFContentBase(
-                        bbox=obj.bbox,
+                        # bbox=obj.bbox,
                         raw_text=obj.get_text(),
                         content_type=type(obj),
                         fontsize_mode=int(char_fontsize),

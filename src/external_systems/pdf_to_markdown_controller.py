@@ -1,6 +1,6 @@
-from entities.pdf_content_base import PDFContentBase, PDFFontsToTagConfig
+from entities.pdf_content_base import PDFContentBase
 from use_cases.pdf_content_extracter import PDFContentExtractor
-from use_cases.pdf_to_markdown_converter import PDF2MarkdownConverter
+from use_cases.pdf_to_markdown_converter import PDF2MarkdownConverter, PDFFontsToTagConfig
 
 
 class PDF2MarkdownController:
@@ -17,6 +17,10 @@ class PDF2MarkdownController:
     def _debug(self, pdf_contents: list[PDFContentBase]) -> None:
         for pdf_content in pdf_contents:
             if pdf_content.fontname_mode in PDFFontsToTagConfig.HEADERS_FONTS:
+                continue
                 print(
                     pdf_content.raw_text, pdf_content.content_type, pdf_content.fontname_mode, pdf_content.fontsize_mode
                 )
+            if pdf_content.fontname_mode in PDFFontsToTagConfig.EQUATION_FONTS:
+                continue
+            print(pdf_content.raw_text, pdf_content.content_type, pdf_content.fontname_mode, pdf_content.fontsize_mode)
