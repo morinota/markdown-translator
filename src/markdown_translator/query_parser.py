@@ -14,6 +14,9 @@ class QueryParser(QueryParserInterface):
         parsed_query = parse.quote(query, safe="")
         parsed_query = self._adjust_for_query_including_slash(parsed_query)
         parsed_query = self._adjust_pipe_parse(parsed_query)
+        parsed_query = self._adjust_parse_double_quart_and_F(parsed_query)
+        parsed_query = self._adjust_adding_newline_for_colon_whitespace(parsed_query)
+
         return parsed_query
 
     def _adjust_for_query_including_slash(self, parsed_query: str) -> str:
@@ -32,5 +35,27 @@ class QueryParser(QueryParserInterface):
         return re.sub(
             pattern=r"%28(.*)%7C(.*)%29",
             repl=r"(\1%5C%7C\2)",
+            string=parsed_query,
+        )
+
+    def _adjust_parse_double_quart_and_F(self, parsed_query: str) -> str:
+        """
+            query内に["F]が含まれる場合に、[%22F]とparseされて欲しい。
+        しかし、[%25C%2F]に変換されて翻訳が切れるケースが発生した為、本後処理を追加した。
+        """
+        return re.sub(
+            pattern=r"%25C%2F",
+            repl=r"%22F",
+            string=parsed_query,
+        )
+
+    def _adjust_adding_newline_for_colon_whitespace(self, parsed_query: str) -> str:
+        """
+        文中の[: ]をシンプルに"%3A%20"にparseすると、翻訳が途切れるケースが発生した。
+        よって"%3A%20%0"としてparseさせる(改行を追加する)ようにして対応する。
+        """
+        return re.sub(
+            pattern=r"%3A%20",
+            repl=r"%3A%20%0A",
             string=parsed_query,
         )

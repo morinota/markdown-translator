@@ -26,7 +26,7 @@ def test_pdf_content_with_large_fontsize_is_converted_to_h1_md_content() -> None
     md_contents_expected = [
         MarkdownContentBase(
             MarkdownTagName.HEADER_1,
-            "Off-Policy Evaluation for Large Action Spaces via Embeddings\n",
+            "Off-Policy Evaluation for Large Action Spaces via Embeddings",
         )
     ]
     assert md_contents == md_contents_expected
@@ -36,13 +36,13 @@ def test_continuous_pdf_contents_without_headers_font_are_joined_and_converted_t
     # Arrange
     pdf_contents = [
         PDFContentBase(
-            raw_text="A is regard as",
+            raw_text="A is regard as\n",
             content_type=PDFContentTypes.TEXT_LINE_HORIZONTAL,
             fontsize_mode=12,
             fontname_mode=PDFFontsToTagConfig.PLAIN_TEXT_FONTS[0],
         ),
         PDFContentBase(
-            raw_text="the B. C will be D.",
+            raw_text="the B. C will be D.\n",
             content_type=PDFContentTypes.TEXT_LINE_HORIZONTAL,
             fontsize_mode=12,
             fontname_mode=PDFFontsToTagConfig.PLAIN_TEXT_FONTS[0],

@@ -5,7 +5,7 @@ from typing import List
 from selenium import webdriver
 
 from entities.markdown_content_class import MarkdownContent
-from markdown_reader.md_input_output import MarkdownCreator, MarkdownReader
+from markdown_reader.md_input_output import MarkdownExporter, MarkdownReader
 from markdown_translator.md_translator import MarkdownTranslatorWrapper
 
 WINDOWS_ENCODE = "utf-8"
@@ -40,7 +40,7 @@ def main(input_md_path: Path) -> None:
 
     output_path = Path(input_md_path.parent, f"{input_md_path.stem}_trans.md")
 
-    print(MarkdownCreator.save_as_md(str(output_path), md_string))
+    print(MarkdownExporter.save_as_md(str(output_path), md_string))
 
 
 if __name__ == "__main__":

@@ -1,5 +1,7 @@
 import re
+from token import EQUAL
 from typing import List
+from entities.markdown_content_base import MarkdownContentBase, MarkdownTagName
 
 from entities.markdown_content_class import MarkdownContent
 
@@ -87,7 +89,32 @@ class MarkdownReader:
         return str_lines_codeblock_combined
 
 
-class MarkdownCreator:
+class MarkdownGenerator:
+    PREFIX_BY_MD_TRG = {
+        MarkdownTagName.HEADER_1: "# ",
+        MarkdownTagName.HEADER_2: "## ",
+        MarkdownTagName.HEADER_3: "### ",
+        MarkdownTagName.HEADER_4: "#### ",
+        MarkdownTagName.EQUATION: "",
+        MarkdownTagName.PLAIN_TEXT: "",
+    }
+    EQUATION_STR = "$$\n"
+
+    def __init__(self) -> None:
+        pass
+
+    def generage(self, md_contents: List[MarkdownContentBase]) -> str:
+        md_str = ""
+        for content in md_contents:
+            if content.tag_name == MarkdownTagName.EQUATION:
+                md_str += self.EQUATION_STR
+            md_str += self.PREFIX_BY_MD_TRG[content.tag_name] + content.text_raw + "\n"
+            if content.tag_name == MarkdownTagName.EQUATION:
+                md_str += self.EQUATION_STR
+        return md_str
+
+
+class MarkdownExporter:
     def __init__(self) -> None:
         pass
 
