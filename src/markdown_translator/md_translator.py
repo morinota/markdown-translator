@@ -138,13 +138,8 @@ class DeepLTranslator:
         """Find translated text from soup object"""
 
         translated_tag = soup_obj.find(
-            name=self.TARGET_TAG_NAME,
-            class_=self.TARGET_TAG_CLASS,
-        )
-
-        translated_tag = soup_obj.find(
-            name="dev",
-            attrs={"aria-labelledby": "translation-target-heading"},
+            name="div",  # 要素の指定
+            attrs={"aria-labelledby": "translation-target-heading"},  # 属性の指定
         )
         # with open("sample.html", "w", encoding="utf-8") as file:
         #     file.write(str(soup_obj))
