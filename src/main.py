@@ -3,7 +3,8 @@ from pathlib import Path
 from typing import List
 
 from selenium import webdriver
-
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 from entities.markdown_content_class import MarkdownContent
 from markdown_reader.md_input_output import MarkdownExporter, MarkdownReader
 from markdown_translator.md_translator import MarkdownTranslatorWrapper
@@ -31,7 +32,10 @@ def main(input_md_path: Path) -> None:
     # options.add_argument("--headless")
     # options.add_argument("--disable-gpu")
     md_translator = MarkdownTranslatorWrapper(
-        driver=webdriver.Chrome(options=options),
+        driver=webdriver.Chrome(
+            options=options,
+            service=Service(ChromeDriverManager().install()),
+        ),
     )
     md_contents_translated = md_translator.translate(md_contents, correspond=True)
     md_string = "\n\n".join(
