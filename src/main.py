@@ -15,6 +15,12 @@ WINDOWS_ENCODE = "utf-8"
 - chrome driverのversion更新:
     - https://chromedriver.chromium.org/downloads より 自身のchromeのversionと合致するchrome driverをインストールして置き換える.
     - chrome driverの置き場所は"C:\Program Files\chromedriver.exe"
+
+- 以下のよくわからないエラーが起こる場合、多分chrome driverとSeleniumのversionが一致しないのかも?? でも動作には悪影響はない。
+[21656:26652:1102/194354.534:ERROR:cert_issuer_source_aia.cc(36)] Error parsing cert retrieved from AIA (as DER):
+ERROR: Couldn't read tbsCertificate as SEQUENCE
+ERROR: Failed parsing Certificate
+
 """
 
 
