@@ -1,49 +1,49 @@
-# header ヘッダー
+# header111 
 
-## subheader 小見出し
+## subheader サブヘッダー
 
 Collaborative filtering is a method of making predictions about an individual's interests or preferences based on the interests or preferences of other people.
-協調フィルタリングとは、他の人々の興味や嗜好に基づいて、個人の興味や嗜好に関する予測を行う方法である。
+日本語
 It is commonly used in recommendations systems for products or content.
-商品やコンテンツのレコメンデーションシステムでよく使われる。
+日本語
 For example, if a group of people all like a particular movie, a collaborative filtering system might recommend that movie to a new user based on the assumption that the new user will also like it.
-たとえば、あるグループの人たち全員がある映画が好きな場合、協調フィルタリングシステムは、新しいユーザーもその映画が好きであるという仮定に基づいて、新しいユーザーにその映画を推薦するかもしれない。
+日本語
 Collaborative filtering algorithms can be divided into two main categories: user-based collaborative filtering and item-based collaborative filtering.
-協調フィルタリングアルゴリズムは、ユーザーベースの協調フィルタリングとアイテムベースの協調フィルタリングの2つに大別できる。
+日本語
 In user-based collaborative filtering, predictions are made about a user's interests based on the interests of similar users.
-ユーザーベースの協調フィルタリングでは、類似ユーザーの興味に基づいて、ユーザーの興味についての予測が行われる。
+日本語
 In item-based collaborative filtering, predictions are made about a user's interests based on their past interactions with specific items.
-アイテムベースの協調フィルタリングでは、特定のアイテムとの過去のインタラクションに基づいて、ユーザーの興味についての予測が行われる。
+日本語
 
-## 翻訳が途中で途切れるケースの例: Examples of cases where the translation breaks off in the middle:.
+## 翻訳が途中で途切れるケースの例: 
 
 Second, very few studies consider to use user feedback other than click / no click labels (e.g., how frequent user returns) to help improve recommendation.
-第二に、クリックした／していないのラベル以外のユーザーフィードバック（例えば、ユーザーがどれくらいの頻度で戻ってくるか）を推薦の改善に役立てようと考えている研究はほとんどない。
+日本語
 
 Second, very few studies consider to use user feedback other than click / gno click labels (e.g., how frequent user returns) to help improve recommendation.
-第二に、クリック／クリックなしラベル以外のユーザーフィードバック（例えば、ユーザーがどれくらいの頻度で戻ってくるか）を推薦の改善に役立てようと考えている研究はほとんどない。
+日本語
 
 We further consider user return pattern as a supplement to click / no click label in order to capture more user feedback information.
-さらに、より多くのユーザーフィードバック情報を取得するために、クリック／クリックなしラベルの補足として、ユーザーのリターンパターンを考慮する。
+日本語
 
 Subsequently, Gupta et al.[12] described a specialized system to generate Tweet recommendations in real time, insights from which were later deployed in GraphJet [31].
-その後、Guptaら[12]は、ツイート推奨をリアルタイムで生成する特化型システムについて説明し、その洞察は後にGraphJet[31]に展開された。
+日本語
 
 <!-- "/"だけでなく、"|"のケースも翻訳が途切れてしまう...-->
-"のケースも翻訳が途切れてしまう...-->
+日本語
 
 Given a sample from P(O|P), we can think of the IPS estimator from Eq.(10) as the Empirical Risk Rˆ(Yˆ ) that estimates R(Yˆ ) for any Yˆ .
-P(O|P)からのサンプルが与えられた場合、式(10)のIPS推定量は、任意のYˆ に対してR(Yˆ )を推定するEmpirical Risk Rˆ(Yˆ )と考えることができる。
+日本語
 
-## 翻訳の前半が途切れるケースの例: Examples of cases where the first half of the translation breaks off:.
+## 翻訳の前半が途切れるケースの例: 
 
 The first is that they may not be general enough to overcome all sources of bias, i.e.they are often designed to compensate for a specific kind of bias: for example, the accuracy metric that is proposed in [24] is able to correct only for the long-tail popularity bias in a dataset.
-例えば、[24]で提案されている精度メトリクスは、データセット内のロングテール人気バイアスのみを補正することができる。
+日本語
 
 <!-- for example以下のみが翻訳されてしまう...! -->
-<! -- only the following for example is translated...! --> -->...
+日本語
 
-## math etc. 数学など
+## math etc. 
 
 $$
 \tilde{x} \sim q(\tilde{x}|x) \\
@@ -52,19 +52,19 @@ y =f(W'h + b') \\
 \theta = \argmin_{W, W', b, b'} \sum_{x \in X} L_R(y, x)
 $$
 
-- piyopiyo_1 ピヨピヨ_1
+- piyopiyo_1 piyopiyo_1
 
-- piyopiyo_1_1 ピヨピヨ_1_1
+- piyopiyo_1_1 piyopiyo_1_1
 
-- piyopiyo_2 piyopiyo_2
+- piyopiyo_2 ピヨピヨ2
 
-- piyopiyo_3 piyopiyo_3
+- piyopiyo_3 ピヨピヨ3
 
-1. hogehoge ホゲホゲ
+1. hogehoge ホッゲホッゲ
 
-2. hogehoge ホゲホゲ
+2. hogehoge ホッゲホッゲ
 
-3. hogehoge_50 hogehoge_50
+3. hogehoge_50 hogehoge_50さん
 
 ![](hogehoge.png)
 

@@ -1,8 +1,6 @@
 import logging
-import re
 import time
 from typing import List, Tuple
-from urllib import parse
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -50,7 +48,7 @@ class MarkdownTranslatorWrapper:
         -------
         List[MarkdownContent]
         """
-        md_contents_translated = []
+        contents_translated = []
         length_contents = len(md_contents)
         for idx, md_content in enumerate(md_contents):
             logger.info(f"[LOG] {idx+1}/{length_contents}========================")
@@ -58,9 +56,9 @@ class MarkdownTranslatorWrapper:
                 md_content,
                 correspond=correspond,
             )
-            md_contents_translated.append(md_content_translated)
+            contents_translated.append(md_content_translated)
 
-        return md_contents_translated
+        return contents_translated
 
     def _tranlate_each_md_content(
         self,
@@ -84,7 +82,7 @@ class MarkdownTranslatorWrapper:
 class DeepLTranslator:
     URL_FORMAT = "https://www.deepl.com/en/translator#{from_lang}/{to_lang}/" + "{query}"
     TRIALS_NUM = 30  # 1 queryをdeepLに投げて翻訳結果の取得を試す回数.
-    INTERVAL_SEC_WEBDRIVER = 1  # 1 trial当たりのinterval
+    INTERVAL_SEC_WEBDRIVER = 3  # 1 trial当たりのinterval
     TARGET_TAG_NAME = "button"
     TARGET_TAG_CLASS = "lmt__translations_as_text__text_btn"
 
@@ -124,8 +122,7 @@ class DeepLTranslator:
             for _ in range(self.TRIALS_NUM):  # 翻訳が完了するまでTRIALS_NUM回 繰り返す
                 time.sleep(self.INTERVAL_SEC_WEBDRIVER)
                 soup_deepl = BeautifulSoup(markup=self.driver.page_source.encode("utf-8"), features="lxml")  # htmlを取得
-
-                translated_query: str = self._find_translated_text(soup_deepl)
+                translated_query = self._extract_translated_text_from_html(soup_deepl)
                 if self._is_translated_properly(translated_query):
                     break
             else:
@@ -137,15 +134,23 @@ class DeepLTranslator:
             target_sentences.append(translated_query)
         return source_sentences, target_sentences
 
-    def _find_translated_text(self, soup_obj: BeautifulSoup) -> str:
+    def _extract_translated_text_from_html(self, soup_obj: BeautifulSoup) -> str:
         """Find translated text from soup object"""
-        target_tag_info = soup_obj.find(
+
+        translated_tag = soup_obj.find(
             name=self.TARGET_TAG_NAME,
             class_=self.TARGET_TAG_CLASS,
         )
 
-        text_in_tag = target_tag_info.text if target_tag_info is not None else ""
-        return text_in_tag
+        translated_tag = soup_obj.find(
+            name="dev",
+            attrs={"aria-labelledby": "translation-target-heading"},
+        )
+        # with open("sample.html", "w", encoding="utf-8") as file:
+        #     file.write(str(soup_obj))
+        # raise Exception
+
+        return translated_tag.text if translated_tag else ""
 
     def _is_translated_properly(self, translated_text: str) -> bool:
         """Check if the acquired translated_text is appropriate."""
