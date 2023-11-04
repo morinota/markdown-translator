@@ -36,19 +36,14 @@ def main(input_md_path: Path) -> None:
     md_contents = markdown_parser.parse(raw_str)
 
     options = webdriver.ChromeOptions()
-    md_translator = MarkdownTranslatorWrapper(
-        driver=webdriver.Chrome(
-            options=options,
-            service=Service(ChromeDriverManager().install()),
-        ),
-    )
-    md_contents_translated = md_translator.translate(md_contents, correspond=True)
-    md_string = "\n\n".join(
-        [md_content.to_str() for md_content in md_contents_translated],
-    )
+    service = Service(ChromeDriverManager().install())
+    chrome_driver = webdriver.Chrome(options, service)
+
+    md_translator_wrapper = MarkdownTranslatorWrapper(chrome_driver)
+    md_contents_translated = md_translator_wrapper.translate(md_contents, correspond=True)
 
     output_path = Path(input_md_path.parent, f"{input_md_path.stem}_trans.md")
-
+    md_string = "\n\n".join([md_content.to_str() for md_content in md_contents_translated])
     print(MarkdownExporter.save_as_md(str(output_path), md_string))
 
 
