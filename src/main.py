@@ -6,7 +6,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from entities.markdown_content_class import MarkdownContent
-from markdown_reader.md_input_output import MarkdownExporter, MarkdownReader
+from markdown_reader.md_input_output import MarkdownExporter, MarkdownParser
 from markdown_translator.md_translator import MarkdownTranslatorWrapper
 
 WINDOWS_ENCODE = "utf-8"
@@ -31,12 +31,11 @@ def print_md_contents(md_contents: List[MarkdownContent]) -> None:
 
 def main(input_md_path: Path) -> None:
     raw_str = input_md_path.read_text(encoding=WINDOWS_ENCODE)
-    markdown_reader = MarkdownReader()
-    md_contents = markdown_reader.read(raw_str)
+
+    markdown_parser = MarkdownParser()
+    md_contents = markdown_parser.parse(raw_str)
 
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless")
-    # options.add_argument("--disable-gpu")
     md_translator = MarkdownTranslatorWrapper(
         driver=webdriver.Chrome(
             options=options,

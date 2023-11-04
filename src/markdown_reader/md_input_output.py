@@ -6,7 +6,7 @@ from entities.markdown_content_base import MarkdownContentBase, MarkdownTagName
 from entities.markdown_content_class import MarkdownContent
 
 
-class MarkdownReader:
+class MarkdownParser:
     LINE_BREAK_STR = "\n"
     EQUATION_STR = "$$"
     WINDOWS_ENCODE = "utf-8"
@@ -14,7 +14,7 @@ class MarkdownReader:
     def __init__(self) -> None:
         pass
 
-    def read(self, raw_str: str) -> List[MarkdownContent]:
+    def parse(self, raw_str: str) -> List[MarkdownContent]:
         str_lines = self._split_by_line_break(raw_str)
         str_lines = self._combine_equation_lines(str_lines)
         str_lines = self._combine_code_block_lines(str_lines)
@@ -26,7 +26,7 @@ class MarkdownReader:
     def _split_by_line_break(self, raw_string: str) -> List[str]:
         """raw_stringを各lineで分割する"""
         # TODO:この分割するタイミングで$\tilde$が$\\tilde$に変換されてしまう? => コンソールに出力しただけでの問題だったのでOK。
-        return raw_string.split(sep=MarkdownReader.LINE_BREAK_STR)
+        return raw_string.split(sep=MarkdownParser.LINE_BREAK_STR)
 
     def _remove_edge_spaces(self, str_lines: List[str]) -> List[str]:
         """str.strip()：stringの両端の指定した文字を削除する.
@@ -46,7 +46,7 @@ class MarkdownReader:
         is_equation = False
 
         for text in str_lines:
-            if text == MarkdownReader.EQUATION_STR:
+            if text == MarkdownParser.EQUATION_STR:
                 is_equation = not is_equation  # boolを反転
             if is_equation:
                 cache_for_equation.append(text)
@@ -124,7 +124,7 @@ class MarkdownExporter:
         with open(
             file=output_path,
             mode="w",
-            encoding=MarkdownReader.WINDOWS_ENCODE,
+            encoding=MarkdownParser.WINDOWS_ENCODE,
         ) as f:
             f.write(md_string)
         return output_path
