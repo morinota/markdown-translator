@@ -49,7 +49,7 @@ def main(input_md_path: Path) -> None:
 
 if __name__ == "__main__":
     # NOTE: 動作確認の場合は、sample_markdown.mdを指定する.
-    input_md_path = Path(sys.argv[1])  # NOTE: idx=0はスクリプトファイル名になってしまう。
+    input_md_path = Path(sys.argv[1])  # NOTE: idx=0はファイル名
 
     print(f"Translate .md document : {str(input_md_path)}")
 
