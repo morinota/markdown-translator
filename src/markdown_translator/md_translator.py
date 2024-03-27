@@ -23,7 +23,26 @@ class MarkdownTranslatorWrapper:
         driver: webdriver.Chrome,
         from_lang: str = "en",
         to_lang: str = "ja",
+        page_load_timeout: int = 600,  # seleniumのdefalut値(300sec) * 2
+        implicit_wait_timeout: int = 100,
     ):
+        """
+        Parameters
+        ----------
+        - driver : webdriver.Chrome
+        - from_lang : str
+            - 翻訳元言語
+        - to_lang : str
+            - 翻訳先言語
+        - page_load_timeout : int
+            - ページが完全に読み込まれるまでの最大時間。このタイムアウトを超えると、TimeoutExceptionがthrowされる。
+        - implicit_wait_timeout : int
+            - 要素が見つかるまでの待機時間。このタイムアウトを超えると、NoSuchElementExceptionがthrowされる。
+        """
+        # set timeouts
+        driver.set_page_load_timeout(page_load_timeout)
+        driver.implicitly_wait(implicit_wait_timeout)
+
         query_parser = QueryParser()
         sentence_splitter = SentenceSplitter()
         self.deepl_translator = DeepLTranslator(
@@ -121,7 +140,9 @@ class DeepLTranslator:
 
             for _ in range(self.TRIALS_NUM):  # 翻訳が完了するまでTRIALS_NUM回 繰り返す
                 time.sleep(self.INTERVAL_SEC_WEBDRIVER)
-                soup_deepl = BeautifulSoup(markup=self.driver.page_source.encode("utf-8"), features="lxml")  # htmlを取得
+                soup_deepl = BeautifulSoup(
+                    markup=self.driver.page_source.encode("utf-8"), features="lxml"
+                )  # htmlを取得
                 translated_query = self._extract_translated_text_from_html(soup_deepl)
                 if self._is_translated_properly(translated_query):
                     break

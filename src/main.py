@@ -37,7 +37,7 @@ def main(input_md_path: Path) -> None:
 
     options = webdriver.ChromeOptions()
     service = Service(ChromeDriverManager().install())
-    chrome_driver = webdriver.Chrome(options, service)
+    chrome_driver = webdriver.Chrome(options=options, service=service)
 
     md_translator_wrapper = MarkdownTranslatorWrapper(chrome_driver)
     md_contents_translated = md_translator_wrapper.translate(md_contents, correspond=True)
