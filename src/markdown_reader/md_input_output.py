@@ -15,6 +15,7 @@ class MarkdownParser:
         pass
 
     def parse(self, raw_str: str) -> List[MarkdownContent]:
+        # TODO: mutableな変数を使ってて理解しづらいので、リファクタリングする
         str_lines = self._split_by_line_break(raw_str)
         str_lines = self._combine_equation_lines(str_lines)
         str_lines = self._combine_code_block_lines(str_lines)
@@ -62,16 +63,13 @@ class MarkdownParser:
 
         return str_lines_equation_combined
 
-    def _combine_code_block_lines(self, str_lines: List[str]) -> List[str]:
-        """str_linesから、markdownの数式箇所(ex. $$hogehoge$$)を見つけて、一つの要素にcombineする
-        str_linesをList[str]でコンソール出力すると、$\tilde$が$\\tilde$に変換されているように見えるが、
-        各要素strのみ出力すると変換はされてなかったので問題なし。
-        """
+    def _combine_code_block_lines(self, markdown_lines: List[str]) -> List[str]:
+        """str_linesから、markdownのコードブロック箇所(ex. ```hogehoge```)を見つけて、一つの要素にcombineする"""
         str_lines_codeblock_combined = []
         cache_for_codeblock = []
         is_codeblock = False
 
-        for text in str_lines:
+        for text in markdown_lines:
             if re.match(MarkdownContent.CODE_BLOCK_PATTERN, text):
                 is_codeblock = not is_codeblock  # ```を発見したらboolを反転
             if is_codeblock:
