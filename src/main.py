@@ -20,7 +20,8 @@ WINDOWS_ENCODE = "utf-8"
 [21656:26652:1102/194354.534:ERROR:cert_issuer_source_aia.cc(36)] Error parsing cert retrieved from AIA (as DER):
 ERROR: Couldn't read tbsCertificate as SEQUENCE
 ERROR: Failed parsing Certificate
-
+- 統合テスト的な動作確認方法:
+    - python src/main.py sample_markdown.md
 """
 
 
@@ -36,7 +37,8 @@ def main(input_md_path: Path) -> None:
     md_contents = markdown_parser.parse(raw_str)
 
     options = webdriver.ChromeOptions()
-    service = Service(ChromeDriverManager().install())
+    # service = Service(ChromeDriverManager().install())
+    service = Service("C:/Program Files/chromedriver.exe")
     chrome_driver = webdriver.Chrome(options=options, service=service)
 
     md_translator_wrapper = MarkdownTranslatorWrapper(chrome_driver)
