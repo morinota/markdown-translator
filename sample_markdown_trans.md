@@ -15,7 +15,7 @@ In user-based collaborative filtering, predictions are made about a user's inter
 In item-based collaborative filtering, predictions are made about a user's interests based on their past interactions with specific items.
 アイテムベースの協調フィルタリングでは、特定のアイテムとの過去のインタラクションに基づいて、ユーザーの興味についての予測が行われる。
 
-## 翻訳が途中で途切れるケースの例: Examples of cases where the translation breaks off in the middle:.
+## 翻訳が途中で途切れるケースの例: 
 
 Second, very few studies consider to use user feedback other than click / no click labels (e.g., how frequent user returns) to help improve recommendation.
 第二に、クリックした／していないのラベル以外のユーザーフィードバック（例えば、ユーザーがどれくらいの頻度で戻ってくるか）を推薦の改善に役立てようと考えている研究はほとんどない。
@@ -27,7 +27,7 @@ We further consider user return pattern as a supplement to click / no click labe
 さらに、より多くのユーザーフィードバック情報を取得するために、クリック/クリックなしのラベルを補足するものとして、ユーザーのリターンパターンを考慮する。
 
 Subsequently, Gupta et al.[12] described a specialized system to generate Tweet recommendations in real time, insights from which were later deployed in GraphJet [31].
-その後、Guptaら[12]は、ツイート推奨をリアルタイムで生成する特化型システムについて説明し、そこから得た洞察は後にGraphJet [31]に展開された。
+その後、Guptaら[12]は、ツイート推奨をリアルタイムで生成する特化型システムについて説明し、その洞察は後にGraphJet[31]に展開された。
 
 <!-- "/"だけでなく、"|"のケースも翻訳が途切れてしまう...-->
 "のケースも翻訳が途切れてしまう...-->
@@ -35,13 +35,13 @@ Subsequently, Gupta et al.[12] described a specialized system to generate Tweet 
 Given a sample from P(O|P), we can think of the IPS estimator from Eq.(10) as the Empirical Risk Rˆ(Yˆ ) that estimates R(Yˆ ) for any Yˆ .
 P(O|P)からのサンプルが与えられた場合、式(10)のIPS推定量は、任意のYˆ に対してR(Yˆ )を推定するEmpirical Risk Rˆ(Yˆ )と考えることができる。
 
-## 翻訳の前半が途切れるケースの例: Examples of cases where the first half of the translation breaks off:.
+## 翻訳の前半が途切れるケースの例: 
 
 The first is that they may not be general enough to overcome all sources of bias, i.e.they are often designed to compensate for a specific kind of bias: for example, the accuracy metric that is proposed in [24] is able to correct only for the long-tail popularity bias in a dataset.
 第一に、バイアスのすべての原因を克服するのに十分な汎用性を持っていない可能性があることである： 例えば、[24]で提案されている精度メトリックは、データセットのロングテール人気バイアスだけを補正することができる。
 
 <!-- for example以下のみが翻訳されてしまう...! -->
-<! -- only the following for example is translated...! --> -->...
+<例えば、以下のみが翻訳されてしまう......！-->
 
 ## math etc. 数学など
 
