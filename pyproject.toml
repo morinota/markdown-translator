@@ -8,6 +8,7 @@ packages = [{include = "markdown_translator", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
+pdfminer = "^20191125"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"

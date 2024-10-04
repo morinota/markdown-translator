@@ -1,6 +1,7 @@
 import abc
-from entities.markdown_content_base import MarkdownTagName
-from entities.pdf_content_base import PDFContentBase
+
+from markdown_translator.entities.markdown_content_base import MarkdownTagName
+from markdown_translator.entities.pdf_content_base import PDFContentBase
 
 
 class PDFFontsToTagConfig:
@@ -36,7 +37,10 @@ class PDF2MdTagClassifier(PDF2MdTagClassifierInterface):
         """headers tagか否かを判定してboolを返す"""
         if pdf_content.fontname_mode not in PDFFontsToTagConfig.HEADERS_FONTS:
             return False
-        if pdf_content.fontsize_mode < self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_3]:
+        if (
+            pdf_content.fontsize_mode
+            < self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_3]
+        ):
             return False
         return True
 

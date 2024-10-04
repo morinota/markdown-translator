@@ -1,4 +1,5 @@
-from markdown_translator.query_parser import QueryParser
+from markdown_translator.markdown_translator.query_parser import QueryParser
+
 
 BASE_URL = "https://www.deepl.com/translator#en/ja"
 
@@ -28,9 +29,7 @@ def test_parser_works_correctly_to_a_query_including_pipe() -> None:
     parsed_query = sut.parse(original_query)
 
     # Assert
-    parsed_query_expected = (
-        r"Given%20a%20sample%20from%20P(O%5C%7CP)%2C%20we%20can%20think%20of%20the%20IPS%20estimator."
-    )
+    parsed_query_expected = r"Given%20a%20sample%20from%20P(O%5C%7CP)%2C%20we%20can%20think%20of%20the%20IPS%20estimator."
     assert f"{BASE_URL}/{parsed_query}" == f"{BASE_URL}/{parsed_query_expected}"
 
 
@@ -65,5 +64,7 @@ def test_parse_query_add_newline_when_colon_whitespace() -> None:
     parsed_query = sut.parse(original_query)
 
     # Assert
-    parsed_query_expected = r"A%20will%20discuss%20an%20example%3A%20%0Awhere%20A%20is%20B."
+    parsed_query_expected = (
+        r"A%20will%20discuss%20an%20example%3A%20%0Awhere%20A%20is%20B."
+    )
     assert f"{BASE_URL}/{parsed_query}" == f"{BASE_URL}/{parsed_query_expected}"
