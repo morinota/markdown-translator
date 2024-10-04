@@ -9,6 +9,11 @@ packages = [{include = "markdown_translator", from = "src"}]
 [tool.poetry.dependencies]
 python = "^3.12"
 pdfminer = "^20191125"
+selenium = "^4.25.0"
+typer = "^0.12.5"
+pydantic = "^2.9.2"
+beautifulsoup4 = "^4.12.3"
+lxml = "^5.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
@@ -16,6 +21,11 @@ ruff = "^0.6.2"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+# liting and formatting
+[tool.ruff.lint]
+extend-select = ["I"]
+# ignore = ["F401"]
 
 [tool.ruff.lint.pycodestyle]
 max-line-length = 120

@@ -1,13 +1,20 @@
 import logging
 import time
-from typing import List, Tuple
+
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
-from entities.markdown_content_class import MarkdownContent
-from markdown_translator.query_parser import QueryParser, QueryParserInterface
-from markdown_translator.sentence_splitter import SentenceSplitter, SentenceSplitterInterface
+from markdown_translator.entities.markdown_content_class import MarkdownContent
+from markdown_translator.markdown_translator.query_parser import (
+    QueryParser,
+    QueryParserInterface,
+)
+from markdown_translator.markdown_translator.sentence_splitter import (
+    SentenceSplitter,
+    SentenceSplitterInterface,
+)
+
 
 logger = logging.getLogger(name=__name__)
 logger.setLevel(logging.DEBUG)
@@ -55,17 +62,17 @@ class MarkdownTranslatorWrapper:
 
     def translate(
         self,
-        md_contents: List[MarkdownContent],
+        md_contents: list[MarkdownContent],
         correspond: bool,
-    ) -> List[MarkdownContent]:
-        """MarkdownContentのListを受け取り、翻訳した情報をtext_translatedに格納して返す
+    ) -> list[MarkdownContent]:
+        """MarkdownContentのlistを受け取り、翻訳した情報をtext_translatedに格納して返す
         Parameters
         ----------
-        md_contents : List[MarkdownContent]
+        md_contents : list[MarkdownContent]
 
         Returns
         -------
-        List[MarkdownContent]
+        list[MarkdownContent]
         """
         contents_translated = []
         length_contents = len(md_contents)
@@ -87,7 +94,9 @@ class MarkdownTranslatorWrapper:
         if md_content.tag_name in MarkdownContent.NON_TRANSLATE_TAGS:
             return md_content
 
-        raw_text_list, translated_text_list = self.deepl_translator.translate(base_query=md_content.text_raw)
+        raw_text_list, translated_text_list = self.deepl_translator.translate(
+            base_query=md_content.text_raw
+        )
 
         return MarkdownContent(
             tag_name=md_content.tag_name,
@@ -99,7 +108,9 @@ class MarkdownTranslatorWrapper:
 
 
 class DeepLTranslator:
-    URL_FORMAT = "https://www.deepl.com/en/translator#{from_lang}/{to_lang}/" + "{query}"
+    URL_FORMAT = (
+        "https://www.deepl.com/en/translator#{from_lang}/{to_lang}/" + "{query}"
+    )
     TRIALS_NUM = 30  # 1 queryをdeepLに投げて翻訳結果の取得を試す回数.
     INTERVAL_SEC_WEBDRIVER = 3  # 1 trial当たりのinterval
     TARGET_TAG_NAME = "button"
@@ -122,7 +133,7 @@ class DeepLTranslator:
     def translate(
         self,
         base_query: str,
-    ) -> Tuple[List[str], List[str]]:
+    ) -> tuple[list[str], list[str]]:
         self.URL_FORMAT
         source_sentences = []
         target_sentences = []
@@ -147,7 +158,9 @@ class DeepLTranslator:
                 if self._is_translated_properly(translated_query):
                     break
             else:
-                logger.info(f"we cannot get translated_query of this in TRIALS_NUM.:{query}")
+                logger.info(
+                    f"we cannot get translated_query of this in TRIALS_NUM.:{query}"
+                )
                 translated_query = "[empty]"
             logger.debug(f"one_query: {query}")
             logger.debug(f"translated_query: {translated_query}")

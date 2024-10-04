@@ -1,15 +1,26 @@
+import os
 import sys
 from pathlib import Path
 from typing import List
 
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
+import typer
+from markdown_translator.entities.markdown_content_class import MarkdownContent
+from markdown_translator.markdown_reader.md_input_output import (
+    MarkdownExporter,
+    MarkdownParser,
+)
+from markdown_translator.markdown_translator.md_translator import (
+    MarkdownTranslatorWrapper,
+)
+
 from selenium.webdriver.chrome.service import Service
-from entities.markdown_content_class import MarkdownContent
-from markdown_reader.md_input_output import MarkdownExporter, MarkdownParser
-from markdown_translator.md_translator import MarkdownTranslatorWrapper
+
+app = typer.Typer()
 
 WINDOWS_ENCODE = "utf-8"
+CHROME_DRIVER_PATH = "/Users/masato.morita/src/markdown-translator/chromedriver"
+print(os.getcwd())
 
 """
 - chrome driverのversion更新:
@@ -30,7 +41,10 @@ def print_md_contents(md_contents: List[MarkdownContent]) -> None:
         print(md_content.text_raw)
 
 
-def main(input_md_path: Path) -> None:
+@app.command()
+def main(
+    input_md_path: Path = typer.Option(..., help="Input markdown file path")
+) -> None:
     raw_str = input_md_path.read_text(encoding=WINDOWS_ENCODE)
 
     markdown_parser = MarkdownParser()
@@ -38,21 +52,21 @@ def main(input_md_path: Path) -> None:
 
     options = webdriver.ChromeOptions()
     # service = Service(ChromeDriverManager().install())
-    service = Service("C:/Program Files/chromedriver.exe")
+    service = Service(CHROME_DRIVER_PATH)
     chrome_driver = webdriver.Chrome(options=options, service=service)
 
     md_translator_wrapper = MarkdownTranslatorWrapper(chrome_driver)
-    md_contents_translated = md_translator_wrapper.translate(md_contents, correspond=True)
+    md_contents_translated = md_translator_wrapper.translate(
+        md_contents, correspond=True
+    )
 
     output_path = Path(input_md_path.parent, f"{input_md_path.stem}_trans.md")
-    md_string = "\n\n".join([md_content.to_str() for md_content in md_contents_translated])
+    md_string = "\n\n".join(
+        [md_content.to_str() for md_content in md_contents_translated]
+    )
     print(MarkdownExporter.save_as_md(str(output_path), md_string))
 
 
 if __name__ == "__main__":
     # NOTE: 動作確認の場合は、sample_markdown.mdを指定する.
-    input_md_path = Path(sys.argv[1])  # NOTE: idx=0はファイル名
-
-    print(f"Translate .md document : {str(input_md_path)}")
-
-    main(input_md_path)
+    app()
