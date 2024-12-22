@@ -1,7 +1,6 @@
 import logging
 import time
 
-
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
@@ -14,7 +13,6 @@ from markdown_translator.markdown_translator.sentence_splitter import (
     SentenceSplitter,
     SentenceSplitterInterface,
 )
-
 
 logger = logging.getLogger(name=__name__)
 logger.setLevel(logging.DEBUG)

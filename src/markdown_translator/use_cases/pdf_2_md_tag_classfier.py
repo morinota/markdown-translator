@@ -37,17 +37,14 @@ class PDF2MdTagClassifier(PDF2MdTagClassifierInterface):
         """headers tagか否かを判定してboolを返す"""
         if pdf_content.fontname_mode not in PDFFontsToTagConfig.HEADERS_FONTS:
             return False
-        if (
-            pdf_content.fontsize_mode
-            < self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_3]
-        ):
+        if pdf_content.fontsize_mode < self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_3]:
             return False
         return True
 
     def _clasify_header_type(self, pdf_content: PDFContentBase) -> MarkdownTagName:
         """どのheaderかを判定して返す"""
         fontsize = pdf_content.fontsize_mode
-        fontname = pdf_content.fontname_mode
+
         if fontsize >= self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_1]:
             return MarkdownTagName.HEADER_1
         elif fontsize >= self.TAG_BY_LOWEST_FONTSIZE[MarkdownTagName.HEADER_2]:

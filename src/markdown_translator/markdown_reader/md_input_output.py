@@ -1,6 +1,5 @@
 import re
 
-
 from markdown_translator.entities.markdown_content_base import (
     MarkdownContentBase,
     MarkdownTagName,

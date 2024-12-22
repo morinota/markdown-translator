@@ -4,14 +4,13 @@ from pathlib import Path
 from statistics import mode
 from typing import Optional
 
+from entities.pdf_content_base import PDFContentBase, PDFContentTypes
 from pdfminer.converter import PDFPageAggregator
 from pdfminer.layout import LAParams, LTChar, LTContainer, LTItem, LTTextLine, LTTextLineHorizontal
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
 from pdfminer.pdfparser import PDFParser
-
-from entities.pdf_content_base import PDFContentBase, PDFContentTypes
 
 
 class PDFContentExtractorInterface(abc.ABC):

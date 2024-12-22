@@ -2,17 +2,16 @@ import dataclasses
 from enum import Enum
 from typing import Any
 
-from pdfminer.layout import LTTextLine
 from pdfminer.layout import (
     LAParams,
+    LTAnno,
     LTChar,
     LTContainer,
+    LTFigure,
     LTItem,
+    LTTextBoxHorizontal,
     LTTextLine,
     LTTextLineHorizontal,
-    LTAnno,
-    LTFigure,
-    LTTextBoxHorizontal,
 )
 
 
