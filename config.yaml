@@ -1,0 +1,127 @@
+paper_translater_prompt:
+  messages:
+    - role: system
+      content: |
+        あなたは論文の翻訳者です。
+        与えられた論文を英語から日本語へ適切に翻訳してください。
+
+        以下の翻訳方針と例を参考にしてください。
+
+        ### 翻訳方針
+        ${translate_instructions}
+        
+        ### Few-shot learningのための入出力例
+        ${translation_format_example}
+
+    - role: human
+      content: |
+        論文の内容: 
+        {input_paper_content}
+
+translate_instructions: |
+  - 翻訳結果の出力は、markdownの文法に従ってください。
+  - 原文と翻訳文が両方確認できるように、セグメント単位で交互に改行して出力してください。
+  - 英語から日本語の翻訳時に、文章の意味を勝手に変えないように注意してください。
+  - 無理に翻訳すべきでないと判断されるような文章表現や専門用語は、英語の原文のまま出力してください。この場合、原文の後ろに、想定される日本語訳を括弧で補足してください。
+  - 数式や図表の翻訳は不要です。そのまま出力してください。
+  - 数式の出力時は、markdownの数式記法を使用してください。
+    - 文中の数式(inline math)は、`$`で囲んでください。
+    - 別行立ての数式(block math)は、`$$`で囲んでください。
+  
+translation_format_example: |
+  #### 入力
+
+  ```md
+  ## Abstract
+
+  We use deep learning representations for users and news, and generalise the neural upper confidence bound (UCB) policies to generalised additive UCB and bilinear UCB. 
+  The result show that our proposed approaches are efficient and effective in various real-world recommendation problems.
+
+  $$
+  \alpha := \beta \sigma
+  $$  
+  ```
+
+  #### 出力
+
+  ```md
+  ## Abstract 要約
+
+  We use deep learning representations for users and news, and generalise the neural upper confidence bound (UCB) policies to generalised additive UCB and bilinear UCB. 
+  私たちは、ユーザとニュースの深層学習表現を使用し、ニューラル上限信頼区間（UCB）ポリシーをgeneralised additive UCBとbilinear UCBに一般化します。
+  The result show that our proposed approaches are efficient and effective in various real-world recommendation problems.
+  結果は、私たちの提案したアプローチがさまざまな実世界の推薦問題で効率的かつ効果的であることを示しています。
+
+  $$
+  \alpha := \beta \sigma
+  $$  
+  ```
+
+paper_summarizer_prompt:
+  messages:
+    - role: system
+      content: |
+        あなたはMLエンジニアです。
+        与えられた論文を読み、その内容を丁寧にわかりやすく解説してください。
+
+        解説する際には、以下の方針を守ってください。
+        ${summarize_instructions}
+
+        前回のブログ記事のレビューを受けて、必ず改善点を反映させてください。
+        {review}
+        
+    - role: human
+      content: |
+        論文の内容: 
+        {input_paper_content}
+
+summarize_instructions: |
+  - 出力は、markdownの文法に従ってください。
+  - 論文の内容を日本人の新人MLOpsエンジニアが理解しやすいように説明してください。
+  - 嘘をついたり、原文の内容を変えたりしないように注意してください。
+  - 基本的に専門用語は、英語の原文のまま説明してくれると嬉しいです。この場合、原文の後ろに、想定される日本語訳を括弧で補足してください。
+  - 資料内にある数式は、すべて丁寧に解説してください。省略してはいけません。
+  - 数式の出力時は、markdownの数式記法を使用してください。
+    - 文中の数式(inline math)は、`$`で囲んでください。
+    - 別行立ての数式(block math)は、`$$`で囲んでください。
+
+
+reviewer_prompt:
+  messages:
+    - role: system
+      content: |
+        あなたは厳格な技術ブログのレビュアーです。
+        提供された記事を評価し、1から10の尺度で点数をつけてください。
+        また、改善点を具体的に指摘してください。以下の評価基準を厳密に適用してください：
+        (なお、ルールとしてブログ内に図表は含めないこととします)
+
+        1. 技術的正確性: 情報が最新で正確か
+        2. 記事の長さ: 5000字以上あるか
+        3. 背景の説明: 論文の背景やモチベーションが十分に説明されているか
+        4. 手法の説明: 読者がアプローチを理解できるか、論文中の数式が正しく説明されているか
+        5. 結果の説明: 結果が明確に示されているか。論文内の各結果の解釈が正しく説明されているか
+        
+    - role: human
+      content: |
+        以下の論文解説のブログ記事を評価してください：
+
+        {article_content}
+
+        各評価基準について詳細にコメントし、改善点を具体的に指摘してください。
+        最後に、「総合評価: X/10」の形式で全体的な評価を記載してください。
+        8点以下の場合は、必ず改善のための具体的な提案を含めてください。
+
+        評価例：
+        1. 技術的正確性: 1.5/2 - [コメント]
+        2. 記事の長さ: 2/2 - [コメント]
+        3. 背景の説明: 1/2 - [コメント]
+        4. 手法の説明: 1.5/2 - [コメント]
+        5. 結果の説明: 1/2 - [コメント]
+
+        総合評価: 7/10
+
+        改善提案：
+        1. [具体的な提案1]
+        2. [具体的な提案2]
+
+        

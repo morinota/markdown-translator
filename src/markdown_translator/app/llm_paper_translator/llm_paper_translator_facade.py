@@ -1,11 +1,9 @@
 import re
 from pathlib import Path
-from typing import TypeVar
 
 import pymupdf4llm
-from langchain.schema.runnable import RunnableLambda
-from langchain.text_splitter import CharacterTextSplitter, MarkdownHeaderTextSplitter
-from langchain_community.document_loaders import WebBaseLoader
+from langchain.text_splitter import MarkdownHeaderTextSplitter
+from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
@@ -13,13 +11,7 @@ from loguru import logger
 from omegaconf import OmegaConf
 
 from markdown_translator.service.custom_callback_handlers import TokenUsageLoggingHandler
-
-T = TypeVar("T")
-
-
-def show_progress(inp: T) -> T:
-    # logger.info("Progress: hoge")
-    return inp
+from markdown_translator.service.web_page_parser import parse_html_to_markdown
 
 
 class LlmPaperTranslatorFacade:
@@ -36,24 +28,22 @@ class LlmPaperTranslatorFacade:
             messages=[(message.role, message.content) for message in self._config.paper_translater_prompt.messages]
         )
 
-        self._translator_chain = (
-            self._translater_prompt
-            | RunnableLambda(show_progress)
-            | self._llm
-            | RunnableLambda(show_progress)
-            | StrOutputParser()
-        )
+        self._translator_chain = self._translater_prompt | self._llm | StrOutputParser()
 
     def run(self, input_path: str, output_md_path: Path) -> None:
         if input_path.startswith("https://"):
-            loader = WebBaseLoader(web_path=input_path)
-            md_text = loader.load()[0].model_dump()["page_content"]
+            loader = AsyncChromiumLoader(urls=[input_path])
+            html_text = loader.load()[0].model_dump()["page_content"]
+            Path("/tmp/temp_web_page.html").write_text(html_text)
+            # HTMLをMarkdownに変換
+            md_text = parse_html_to_markdown(html_text)
+            Path("/tmp/temp_md_text.md").write_text(md_text)
+
         elif input_path.endswith(".pdf") and Path(input_path).exists():
             md_text = pymupdf4llm.to_markdown(input_path)
             # 正規表現でヘッダーっぽいものを検出して変換
             pattern = r"\*\*(\d+)\*\*\s+\*\*([^*]+)\*\*"
             md_text = re.sub(pattern, r"## \1 \2", md_text)
-
         else:
             raise ValueError("Invalid input_pdf_path: ", input_path)
 
@@ -73,7 +63,13 @@ class LlmPaperTranslatorFacade:
         translated_outputs = []
         for idx, doc in enumerate(md_header_splits):
             logger.info(f"Processing chunk {idx + 1} of {len(md_header_splits)}")
-            translated_outputs.append(self._translator_chain.invoke({"input_paper_content": doc.page_content}))
+            translated_output = self._translator_chain.invoke({"input_paper_content": doc.page_content})
+
+            # 先頭の```mdと末尾の```を削除する
+            if translated_output.startswith("```md") and translated_output.endswith("```"):
+                translated_output = translated_output[5:-3]
+
+            translated_outputs.append(translated_output)
 
         translated_output = "\n\n".join(translated_outputs)
         if not output_md_path.parent.exists():
@@ -84,6 +80,8 @@ class LlmPaperTranslatorFacade:
 
 if __name__ == "__main__":
     # input = Path("sample_paper.pdf")
-    input = "https://python.langchain.com/v0.1/docs/modules/tools/custom_tools/"
-    runner = LlmPaperTranslatorFacade()
-    runner.run(input, Path("sample_paper_2.md"))
+    # input = "https://langchain-ai.github.io/langgraph/tutorials/introduction/"
+    # runner = LlmPaperTranslatorFacade()
+    # runner.run(input, Path("sample_paper_2.md"))
+    pdf_path = Path("/tmp/temp_web_page.pdf")
+    html_uri = "https://langchain-ai.github.io/langgraph/tutorials/introduction/"
