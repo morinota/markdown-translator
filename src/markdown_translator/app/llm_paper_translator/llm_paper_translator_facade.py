@@ -44,6 +44,7 @@ class LlmPaperTranslatorFacade:
             # 正規表現でヘッダーっぽいものを検出して変換
             pattern = r"\*\*(\d+)\*\*\s+\*\*([^*]+)\*\*"
             md_text = re.sub(pattern, r"## \1 \2", md_text)
+            md_text = fix_line_breaks(md_text)
         else:
             raise ValueError("Invalid input_pdf_path: ", input_path)
 
@@ -78,6 +79,21 @@ class LlmPaperTranslatorFacade:
         logger.info(f"Markdown file saved at: {output_md_path}")
 
 
+def fix_line_breaks(md_text: str) -> str:
+    """
+    以下の条件をすべて満たす行の改行だけをスペースに置き換える:
+      1. 行頭が '## ' で始まらない (ヘッダー行でない)
+      2. 行末が '.' で終わらない (文末ドットがない)
+      3. 改行が 1つだけで、連続する改行が無い (二重改行は保持)
+      4. 次の行が '## ' で始まらない
+    """
+    pattern = r"^(?!## )(?P<text>.*?)(?<!\.)\n(?!\n|## )"
+    #  re.MULTILINE フラグを用いることで、
+    # '^' および '$' が各行の先頭・末尾にマッチするようになる
+    md_text = re.sub(pattern, r"\g<text> ", md_text, flags=re.MULTILINE)
+    return md_text
+
+
 if __name__ == "__main__":
     # input = Path("sample_paper.pdf")
     # input = "https://langchain-ai.github.io/langgraph/tutorials/introduction/"
@@ -85,3 +101,20 @@ if __name__ == "__main__":
     # runner.run(input, Path("sample_paper_2.md"))
     pdf_path = Path("/tmp/temp_web_page.pdf")
     html_uri = "https://langchain-ai.github.io/langgraph/tutorials/introduction/"
+
+    md_text = """## 1 Header
+これはヘッダー行です
+
+この行はドットがないし
+行頭が##じゃなく、改行2つで段落が空いてます
+
+ドットがない1行改行
+ここはスペースに置き換えられます
+
+ドットで終わる行.
+これは改行してOK
+## 2 Header
+二重改行があるなら
+そこは消さずにそのまま
+"""
+    print(fix_line_breaks(md_text))
