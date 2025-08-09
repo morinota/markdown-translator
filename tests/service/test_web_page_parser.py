@@ -152,3 +152,29 @@ class TestWebPageParser:
         2. Item 2
         """
         assert _normalize_md(actual) == _normalize_md(expected_markdown)
+
+    def test_spanタグやdivタグにもいい感じに対応する(self):
+        html = """
+        <html>
+            <body>
+                <div class="entry-content prose prose-doordash pb-20 max-w-none">
+                    <a href="https://doordash.engineering/2018/07/20/how-artificial-intelligence-powers-logistics-at-doordash/"><span style="font-weight: 400;">DoorDash uses Machine Learning</span></a><span style="font-weight: 400;"> (ML) at various places like inputs to </span><a href="https://doordash.engineering/2020/02/28/next-generation-optimization-for-dasher-dispatch-at-doordash/"><span style="font-weight: 400;">Dasher Assignment Optimization</span></a><span style="font-weight: 400;">, balancing Supply &amp; Demand, Fraud prediction, Search Ranking, Menu classification, Recommendations etc. As the usage of ML models increased, there grew a need for a holistic ML Platform to increase the productivity of shipping ML-based solutions. This kick-started an effort to build an ML Platform for DoorDash.</span>
+
+                <span style="font-weight: 400;">The ML Platform consists of two critical pieces: first the infrastructure needed for ML to work at scale, and second a productive environment for engineers and data scientists to build their models. Scalability and productivity are the key driving factors in the decision making process for us.</span>
+                <h3><span style="font-weight: 400;">Scenarios and Requirements</span></h3>
+                <span style="font-weight: 400;">As we dug into ML usage at DoorDash, the following key scenarios for ML emerged:</span>
+    
+            </body>
+        </html>
+        """
+
+        actual = parse_html_to_markdown(html)
+        print(actual)
+
+        expected_markdown = """
+        DoorDash uses Machine Learning (ML) at various places like inputs to Dasher Assignment Optimization, balancing Supply &amp; Demand, Fraud prediction, Search Ranking, Menu classification, Recommendations etc. As the usage of ML models increased, there grew a need for a holistic ML Platform to increase the productivity of shipping ML-based solutions. This kick-started an effort to build an ML Platform for DoorDash.
+
+        ### Scenarios and Requirements
+        As we dug into ML usage at DoorDash, the following key scenarios for ML emerged:
+        """
+        assert _normalize_md(actual) == _normalize_md(expected_markdown)

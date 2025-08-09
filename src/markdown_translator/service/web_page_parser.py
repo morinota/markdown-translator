@@ -38,12 +38,12 @@ def parse_html_to_markdown(html: str) -> str:
 
 
 def _parse_by_tag(element: NavigableString) -> str | None:
-    print(type(element))
-    if element.name in ["h1", "h2", "h3"]:
+    print(f"{element.name=}, {element.get_text(strip=True)=}")
+    if element.name in ["h1", "h2", "h3", "h4", "h5"]:
         level = int(element.name[1])
         return f"{'#' * level} {element.get_text(strip=True)}"
 
-    elif element.name == "p":
+    elif element.name in ["p", "span"]:
         return element.get_text(strip=True)
 
     elif element.name == "pre":
