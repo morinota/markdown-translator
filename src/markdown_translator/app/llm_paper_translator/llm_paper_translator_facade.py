@@ -75,9 +75,13 @@ class LlmPaperTranslatorFacade:
             translated_outputs.append(translated_output)
 
         translated_output = "\n\n".join(translated_outputs)
+
+        # 出力ファイルの1行目にrefs行を追加
+        final_output = f"refs: {input_path}\n\n{translated_output}"
+
         if not output_md_path.parent.exists():
             output_md_path.parent.mkdir(parents=True)
-        output_md_path.write_text(translated_output)
+        output_md_path.write_text(final_output)
         logger.info(f"Markdown file saved at: {output_md_path}")
 
 
