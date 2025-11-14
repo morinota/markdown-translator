@@ -2,6 +2,7 @@ import re
 from pathlib import Path
 
 import pymupdf4llm
+import requests
 from langchain.text_splitter import MarkdownHeaderTextSplitter
 from langchain_community.document_loaders import AsyncChromiumLoader
 from langchain_core.output_parsers import StrOutputParser
@@ -12,6 +13,19 @@ from omegaconf import OmegaConf
 
 from markdown_translator.service.custom_callback_handlers import TokenUsageLoggingHandler
 from markdown_translator.service.web_page_parser import parse_html_to_markdown
+
+
+def is_pdf_url(url: str) -> bool:
+    """URLがPDFファイルを指しているかを判定する"""
+    url_lower = url.lower()
+    return url_lower.endswith(".pdf") or "/pdf/" in url_lower
+
+
+def download_pdf(url: str, output_path: Path) -> None:
+    """URLからPDFをダウンロードしてローカルに保存する"""
+    response = requests.get(url)
+    output_path.write_bytes(response.content)
+    logger.info(f"PDF downloaded from {url} to {output_path}")
 
 
 class LlmPaperTranslatorFacade:
@@ -31,13 +45,24 @@ class LlmPaperTranslatorFacade:
         self._translator_chain = self._translater_prompt | self._llm | StrOutputParser()
 
     def run(self, input_path: str, output_md_path: Path) -> None:
-        if input_path.startswith("https://"):
-            loader = AsyncChromiumLoader(urls=[input_path])
-            html_text = loader.load()[0].model_dump()["page_content"]
-            Path("/tmp/temp_web_page.html").write_text(html_text)
-            # HTMLをMarkdownに変換
-            md_text = parse_html_to_markdown(html_text)
-            Path("/tmp/temp_md_text.md").write_text(md_text)
+        if input_path.startswith("https://") or input_path.startswith("http://"):
+            if is_pdf_url(input_path):
+                # PDF URLの場合は一時的にダウンロード
+                temp_pdf_path = Path("/tmp/temp_downloaded.pdf")
+                download_pdf(input_path, temp_pdf_path)
+                md_text = pymupdf4llm.to_markdown(str(temp_pdf_path))
+                # 正規表現でヘッダーっぽいものを検出して変換
+                pattern = r"\*\*(\d+)\*\*\s+\*\*([^*]+)\*\*"
+                md_text = re.sub(pattern, r"## \1 \2", md_text)
+                md_text = fix_line_breaks(md_text)
+            else:
+                # 通常のWebページの場合
+                loader = AsyncChromiumLoader(urls=[input_path])
+                html_text = loader.load()[0].model_dump()["page_content"]
+                Path("/tmp/temp_web_page.html").write_text(html_text)
+                # HTMLをMarkdownに変換
+                md_text = parse_html_to_markdown(html_text)
+                Path("/tmp/temp_md_text.md").write_text(md_text)
 
         elif input_path.endswith(".pdf") and Path(input_path).exists():
             md_text = pymupdf4llm.to_markdown(input_path)
